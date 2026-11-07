@@ -1,0 +1,137 @@
+:root {
+  --czarny: #111111;
+  --tekst: #1d1d1f;
+  --szary-tekst: #5b5b60;
+  --tlo: #ffffff;
+  --tlo-szare: #f5f4f1;
+  --linia: #e3e1dc;
+  --zolty: #fbcb69;
+  --koral: #f26a6c;
+  --niebieski: #6899cc;
+  --promien: 14px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--tekst);
+  background: var(--tlo);
+  line-height: 1.6;
+  font-size: 17px;
+}
+img { max-width: 100%; height: auto; }
+a { color: var(--czarny); }
+h1, h2, h3, h4 { line-height: 1.15; margin: 0 0 .6em; letter-spacing: -.01em; }
+h1 { font-size: clamp(2.1rem, 5.5vw, 3.6rem); font-weight: 800; }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.3rem); font-weight: 800; }
+h3 { font-size: 1.2rem; }
+h4 { font-size: 1.1rem; }
+
+.kontener { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+.waski { max-width: 760px; }
+
+/* Nagłówek */
+.naglowek { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); border-bottom: 1px solid var(--linia); }
+.naglowek__wnetrze { display: flex; align-items: center; gap: 20px; height: 64px; }
+.marka { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 1.05rem; white-space: nowrap; }
+.menu { display: flex; gap: 22px; margin-left: auto; }
+.menu a { text-decoration: none; font-weight: 600; color: var(--szary-tekst); }
+.menu a:hover { color: var(--czarny); }
+@media (max-width: 760px) { .menu { display: none; } .naglowek .przycisk--maly { margin-left: auto; } }
+
+/* Przyciski */
+.przycisk {
+  display: inline-block; background: var(--czarny); color: #fff; text-decoration: none;
+  font-weight: 700; padding: 14px 24px; border-radius: 999px; border: 2px solid var(--czarny);
+  transition: transform .15s ease;
+}
+.przycisk:hover { transform: translateY(-1px); }
+.przycisk--jasny { background: transparent; color: var(--czarny); }
+.przycisk--maly { padding: 8px 16px; font-size: .95rem; }
+.link { background: none; border: 0; padding: 0; font: inherit; color: var(--czarny); text-decoration: underline; cursor: pointer; }
+
+/* Paski z logo */
+.paski { display: flex; gap: 6px; margin: 0 0 18px; }
+.paski i { display: block; width: 26px; height: 8px; transform: skewX(-30deg); }
+.paski i:nth-child(1) { background: var(--zolty); }
+.paski i:nth-child(2) { background: var(--koral); }
+.paski i:nth-child(3) { background: var(--niebieski); }
+
+/* Bohater */
+.bohater { padding: 56px 0 64px; }
+.bohater__wnetrze { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+.bohater__lead { font-size: 1.2rem; color: var(--szary-tekst); max-width: 36em; }
+.bohater__przyciski { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 16px; }
+.bohater__adres { font-weight: 600; color: var(--szary-tekst); margin: 0; }
+.bohater__logo { justify-self: center; width: min(320px, 80%); }
+@media (max-width: 760px) {
+  .bohater { padding-top: 32px; }
+  .bohater__wnetrze { grid-template-columns: 1fr; }
+  .bohater__logo { display: none; }
+}
+
+/* Sekcje */
+.sekcja { padding: 64px 0; }
+.sekcja--szara { background: var(--tlo-szare); }
+.wstep { color: var(--szary-tekst); margin-top: -.2em; }
+.siatka { display: grid; gap: 16px; }
+.siatka--4 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.siatka--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.karta { border-top: 4px solid var(--czarny); padding-top: 16px; }
+.karta:nth-child(4n+1) { border-color: var(--zolty); }
+.karta:nth-child(4n+2) { border-color: var(--koral); }
+.karta:nth-child(4n+3) { border-color: var(--niebieski); }
+.karta p { color: var(--szary-tekst); margin: 0; }
+
+.dwie-kolumny { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-bottom: 24px; }
+@media (max-width: 760px) { .dwie-kolumny { grid-template-columns: 1fr; } }
+
+.cena-duza { font-size: 2.2rem; font-weight: 800; margin: .2em 0 0; }
+.cena-duza span { font-size: 1rem; font-weight: 600; color: var(--szary-tekst); }
+
+.kroki { list-style: none; counter-reset: k; padding: 0; margin: 0; }
+.kroki li { counter-increment: k; position: relative; padding: 18px 18px 18px 64px; background: #fff; border-radius: var(--promien); margin-bottom: 12px; }
+.kroki li::before { content: counter(k); position: absolute; left: 18px; top: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--czarny); color: #fff; font-weight: 800; display: grid; place-items: center; }
+
+/* Zajęcia */
+.grupa { margin-top: 36px; padding-left: 12px; border-left: 4px solid var(--koral); }
+.zaj { background: var(--tlo-szare); border-radius: var(--promien); padding: 20px; display: flex; flex-direction: column; }
+.zaj p { color: var(--szary-tekst); margin: 0 0 12px; flex: 1; }
+.poziom { font-size: .85rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--czarny); }
+
+/* Grafik */
+.grafik { display: grid; gap: 18px; margin: 20px 0 28px; }
+.grafik__dzien h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: .05em; color: var(--szary-tekst); margin-bottom: 8px; }
+.grafik__wiersz { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; background: #fff; border-radius: 10px; padding: 12px 16px; margin-bottom: 6px; }
+.grafik__godz { font-weight: 800; font-variant-numeric: tabular-nums; }
+.grafik__stan { font-size: .85rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: #e6f2e6; color: #1f6b2a; white-space: nowrap; }
+.grafik__stan--brak { background: #fbe4e4; color: #9b2224; }
+.grafik__info { color: var(--szary-tekst); }
+
+/* Cennik */
+.tabela-owijka { overflow-x: auto; }
+.cennik { width: 100%; border-collapse: collapse; min-width: 520px; }
+.cennik th, .cennik td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--linia); vertical-align: top; }
+.cennik thead th { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--szary-tekst); }
+.cennik td:nth-child(2) { font-weight: 800; white-space: nowrap; }
+.drobne { font-size: .92rem; color: var(--szary-tekst); }
+
+/* Pytania */
+details { background: #fff; border-radius: 10px; padding: 0 18px; margin-bottom: 10px; }
+summary { cursor: pointer; font-weight: 700; padding: 16px 0; }
+details p { margin: 0 0 16px; color: var(--szary-tekst); }
+
+/* Kontakt */
+address { font-style: normal; font-size: 1.1rem; margin-bottom: 12px; }
+.spolecznosci { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 20px; font-weight: 700; }
+
+/* Stopka */
+.stopka { background: var(--czarny); color: #ddd; padding: 40px 0; }
+.stopka a { color: #fff; }
+.stopka p { margin: 4px 0; }
+.stopka .drobne { color: #999; margin-top: 14px; }
+
+:focus-visible { outline: 3px solid var(--niebieski); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .przycisk { transition: none; } }
