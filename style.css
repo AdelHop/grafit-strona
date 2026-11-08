@@ -135,3 +135,17 @@ address { font-style: normal; font-size: 1.1rem; margin-bottom: 12px; }
 
 :focus-visible { outline: 3px solid var(--niebieski); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .przycisk { transition: none; } }
+
+/* Sklep: gadżety reklamowe z aplikacji studia */
+.sklep__grupy { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 4px; }
+.sklep__grupy:empty { display: none; }
+.sklep__grupa { font: inherit; font-weight: 700; padding: 8px 16px; border-radius: 999px; border: 2px solid var(--czarny); background: transparent; color: var(--czarny); cursor: pointer; }
+.sklep__grupa[aria-pressed="true"] { background: var(--czarny); color: #fff; }
+.sklep { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin: 20px 0 28px; }
+.produkt { background: #fff; border-radius: var(--promien); overflow: hidden; display: flex; flex-direction: column; }
+.produkt img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: var(--tlo-szare); display: block; }
+.produkt__tresc { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.produkt h3 { margin: 0; font-size: 1.05rem; }
+.produkt__cena { font-weight: 800; font-size: 1.1rem; }
+.produkt__opcje { color: var(--szary-tekst); font-size: .9rem; margin: 0; }
+.produkt__grupa { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--szary-tekst); }
