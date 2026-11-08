@@ -7,7 +7,7 @@
 - Adres: ul. Myśliwska 59/U2, Kraków
 - E-mail: gra.fit.fitness.krakow@gmail.com
 - Facebook: https://www.facebook.com/gra.fit.fitness.dla.kobiet/
-- Zapisy, grafik i karnety: aplikacja w przeglądarce https://grafit.adelahopek.pl/
+- Zapisy, grafik i karnety: aplikacja w przeglądarce https://app.grafit-fitness.pl/
 - Grupy: najwyżej 7 osób, zajęcia trwają 60 minut (warsztaty dłużej)
 - Wypisanie: najpóźniej 24 godziny przed zajęciami
 - Płatności: gotówka, BLIK, przelew; vouchery na prezent
@@ -45,8 +45,8 @@
 
 ## Sklep
 
-- Gadżety reklamowe GRA-fit (sportowe i artystyczne: bluzy, T-shirty, torby, butelki, naklejki, pluszaki) – zamówienie w aplikacji (https://grafit.adelahopek.pl/sklep), odbiór w studiu
+- Gadżety reklamowe GRA-fit (sportowe i artystyczne: bluzy, T-shirty, torby, butelki, naklejki, pluszaki) – zamówienie w aplikacji (https://app.grafit-fitness.pl/sklep), odbiór w studiu
 
 ## Strony
 
-- [Strona główna](https://DOMENA-STUDIA.pl/): oferta, cennik, grafik, pytania i odpowiedzi
+- [Strona główna](https://grafit-fitness.pl/): oferta, cennik, grafik, pytania i odpowiedzi

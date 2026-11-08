@@ -1,6 +1,6 @@
 // Gadżety reklamowe na żywo z aplikacji studia (publiczna lista produktów), z podziałem na grupy.
 (function () {
-  var APLIKACJA = 'https://grafit.adelahopek.pl';
+  var APLIKACJA = 'https://app.grafit-fitness.pl';
   var lista = document.getElementById('lista-sklepu');
   var grupyEl = document.getElementById('sklep-grupy');
   if (!lista) return;

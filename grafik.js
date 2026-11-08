@@ -1,6 +1,6 @@
 // Najbliższe zajęcia na żywo z aplikacji studia (publiczny podgląd: nazwa, godzina, czy są miejsca).
 (function () {
-  var ADRES = 'https://grafit.adelahopek.pl/api/grafit/public/classes';
+  var ADRES = 'https://app.grafit-fitness.pl/api/grafit/public/classes';
   var DNI = 7;
   var lista = document.getElementById('lista-grafiku');
   if (!lista) return;
