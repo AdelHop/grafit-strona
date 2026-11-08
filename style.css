@@ -104,11 +104,19 @@ h4 { font-size: 1.1rem; }
 /* Grafik */
 .grafik { display: grid; gap: 18px; margin: 20px 0 28px; }
 .grafik__dzien h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: .05em; color: var(--szary-tekst); margin-bottom: 8px; }
-.grafik__wiersz { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; background: #fff; border-radius: 10px; padding: 12px 16px; margin-bottom: 6px; }
+.grafik__wiersz { display: grid; grid-template-columns: 64px 1fr auto auto; gap: 12px; align-items: center; background: #fff; border-radius: 10px; padding: 12px 16px; margin-bottom: 6px; }
 .grafik__godz { font-weight: 800; font-variant-numeric: tabular-nums; }
 .grafik__stan { font-size: .85rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: #e6f2e6; color: #1f6b2a; white-space: nowrap; }
 .grafik__stan--brak { background: #fbe4e4; color: #9b2224; }
 .grafik__info { color: var(--szary-tekst); }
+.grafik__zapis { white-space: nowrap; }
+/* Bez wolnych miejsc nie ma przycisku: status zajmuje też jego kolumnę. */
+.grafik__stan--brak { grid-column: 3 / -1; justify-self: end; }
+@media (max-width: 600px) {
+  .grafik__wiersz { grid-template-columns: 56px 1fr auto; }
+  .grafik__zapis { grid-column: 1 / -1; justify-self: stretch; text-align: center; }
+  .grafik__stan--brak { grid-column: auto; }
+}
 
 /* Cennik */
 .tabela-owijka { overflow-x: auto; }

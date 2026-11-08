@@ -1,6 +1,8 @@
 // Najbliższe zajęcia na żywo z aplikacji studia (publiczny podgląd: nazwa, godzina, czy są miejsca).
 (function () {
   var ADRES = 'https://app.grafit-fitness.pl/api/grafit/public/classes';
+  // Zapis w aplikacji: bez logowania aplikacja najpierw pokaże logowanie, a potem grafik.
+  var ZAPIS = 'https://app.grafit-fitness.pl/grafik';
   var DNI = 7;
   var lista = document.getElementById('lista-grafiku');
   if (!lista) return;
@@ -44,6 +46,12 @@
           w.appendChild(el('span', 'grafik__godz', godzina.format(z.start)));
           w.appendChild(el('span', '', z.nazwa));
           w.appendChild(el('span', z.miejsca ? 'grafik__stan' : 'grafik__stan grafik__stan--brak', z.miejsca ? 'są miejsca' : 'brak miejsc'));
+          if (z.miejsca) {
+            var zapis = el('a', 'przycisk przycisk--maly grafik__zapis', 'Dopisz się do zajęć');
+            zapis.href = ZAPIS;
+            zapis.setAttribute('aria-label', 'Dopisz się do zajęć: ' + z.nazwa + ', ' + klucz + ' ' + godzina.format(z.start));
+            w.appendChild(zapis);
+          }
           blok.appendChild(w);
         });
         lista.appendChild(blok);
@@ -55,7 +63,7 @@
   var przycisk = document.getElementById('udostepnij');
   if (przycisk) {
     przycisk.addEventListener('click', function () {
-      var dane = { title: 'GRA-fit Fitness', text: 'Studio treningowe dla kobiet w Krakowie – grupy do 7 osób', url: location.href.split('#')[0] };
+      var dane = { title: 'GRA-fit Fitness', text: 'Kameralne studio treningowe w Krakowie – grupy do 7 osób', url: location.href.split('#')[0] };
       if (navigator.share) { navigator.share(dane).catch(function () {}); return; }
       if (navigator.clipboard) {
         navigator.clipboard.writeText(dane.url).then(function () { przycisk.textContent = 'Link skopiowany'; });
