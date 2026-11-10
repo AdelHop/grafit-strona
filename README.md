@@ -20,7 +20,7 @@ Bez frameworka i bez budowania – sam HTML/CSS/JS, więc Google i asystenci AI 
 
 1. **Domena** – strona działa pod `https://grafit-fitness.pl` (plik `CNAME`, GitHub Pages), aplikacja pod `https://app.grafit-fitness.pl`.
 2. **Instagram** – w index.html odkomentuj link w sekcji „Obserwuj nas” i dopisz adres do `sameAs` w danych strukturalnych.
-3. **Telefon, kod pocztowy, dzielnica, godziny otwarcia** – dopisać do sekcji Kontakt i do `address`/`telephone` w danych strukturalnych.
+3. **Godziny otwarcia** – celowo pominięte, bo są różne; aktualny grafik pokazuje sekcja z zajęciami.
 4. **Zdjęcia** – prawdziwe zdjęcia sali i zajęć (z podpisami `alt`) bardzo pomagają w Google i na Facebooku.
 5. **Sprawdzić u właścicielki** – czy publikować adres e-mail, aktualność cen. (Studio jest dla wszystkich: teksty nie zawężają do kobiet, poza zajęciami dla kobiet w ciąży i Pelvi Balance.)
 
