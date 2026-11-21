@@ -41,7 +41,8 @@ async function tabuj(page, ile, wstecz = false) {
           ''
         )
           .replace(/\s+/g, ' ')
-          .trim();
+          .trim()
+          .slice(0, 60);
         const r = e.getBoundingClientRect();
         return {
           opis: `${e.tagName.toLowerCase()}${e.id ? '#' + e.id : ''} „${nazwa}”`,
