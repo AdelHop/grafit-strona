@@ -19,7 +19,8 @@ async function doFrazy(nvda, komenda, tekst) {
     const przed = (await nvda.spokenPhraseLog()).length;
     await nvda.perform(komenda);
     const nowe = (await nvda.spokenPhraseLog()).slice(przed);
-    if (nowe.some((f) => f.includes(tekst))) return;
+    // Bez rozróżniania wielkości liter: nagłówki z `text-transform: uppercase` NVDA czyta jako „CO”.
+    if (nowe.some((f) => f.toLocaleLowerCase('pl').includes(tekst.toLocaleLowerCase('pl')))) return;
   }
   throw new Error(`NVDA nie doszedł do „${tekst}” w ${MAKS_KROKOW} krokach`);
 }
@@ -79,7 +80,7 @@ test('NVDA: cennik → najbliższe zajęcia → dopisz się', async ({ page, nvd
   const mowa = log.join('\n');
   const { nazwa, godzina } = oczekiwanyZapis();
   expect(mowa).toContain('Cennik');
-  expect(log.some((f) => /(^|\W)Co(\W|$)/.test(f))).toBe(true);
+  expect(log.some((f) => /(^|\W)Co(\W|$)/i.test(f))).toBe(true);
   expect(mowa).toContain('Najbliższe zajęcia');
   expect(mowa).toContain(`Dopisz się do zajęć: ${nazwa}`);
   expect(mowa).toContain(godzina);
