@@ -336,3 +336,72 @@ test.describe('wczytanie grafiku i sklepu ogłaszane', () => {
     });
   }
 });
+
+// Deklaracja dostępności (dostepnosc.html): klawiatura, fokus, „Przejdź do treści”, 320 px;
+// link w stopce strony głównej prowadzi pod adres, na który wskazuje aplikacja.
+test.describe('deklaracja dostępności', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/dostepnosc.html');
+    await expect(page.locator('h1')).toHaveText('Deklaracja dostępności');
+  });
+
+  test('deklaracja: klawiatura dochodzi do wszystkiego, fokus widoczny', async ({ page }) => {
+    const oczekiwane = await oznaczInteraktywne(page);
+    const odwiedzone = [];
+    const bezObrysu = [];
+    for (let i = 0; i < oczekiwane.length + 10; i++) {
+      await page.keyboard.press('Tab');
+      const stan = await page.evaluate(() => {
+        const e = document.activeElement;
+        if (e === document.body || e.dataset.odwiedzony) return null;
+        e.dataset.odwiedzony = '1';
+        const s = getComputedStyle(e);
+        return { nr: e.dataset.nr ?? 'bez-nr', opis: e.textContent.trim().slice(0, 40), obrys: s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0 };
+      });
+      if (!stan) break;
+      odwiedzone.push(stan.nr);
+      if (!stan.obrys) bezObrysu.push(stan.opis);
+    }
+    const kolejnosc = odwiedzone.filter((n) => n !== 'bez-nr').map(Number);
+    expect(kolejnosc, 'kolejność Tab = kolejność w DOM').toEqual(oczekiwane.map((_, i) => i));
+    expect(bezObrysu, 'elementy bez obrysu fokusu').toEqual([]);
+  });
+
+  test('deklaracja: przejdź do treści', async ({ page }) => {
+    await page.keyboard.press('Tab');
+    await expect(page.locator(':focus'), 'pierwszy Tab').toHaveAccessibleName(/Przejdź do treści/);
+    await page.keyboard.press('Enter');
+    await poPrzewinieciu(page);
+    expect(await page.evaluate(() => !!document.activeElement.closest('main')), 'fokus w main po Enter').toBe(true);
+  });
+
+  test('deklaracja: 320 px bez przewijania w bok', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    for (const odstepy of [false, true]) {
+      if (odstepy) await page.addStyleTag({ content: ODSTEPY_WCAG });
+      const etykieta = odstepy ? ' (odstępy WCAG)' : '';
+      expect.soft(await przewijaPoziomo(page), 'strona przewija się w bok' + etykieta).toBe(false);
+      expect.soft(await pozaEkranem(page), 'elementy poza ekranem' + etykieta).toEqual([]);
+    }
+  });
+
+  test('deklaracja: nagłówki po kolei', async ({ page }) => {
+    const poziomy = await page.locator('h1, h2, h3, h4, h5, h6').evaluateAll((hs) => hs.map((h) => Number(h.tagName[1])));
+    expect(poziomy[0], 'pierwszy nagłówek to h1').toBe(1);
+    expect(poziomy.filter((p) => p === 1), 'jeden h1').toHaveLength(1);
+    const skoki = poziomy.filter((p, i) => i > 0 && p > poziomy[i - 1] + 1);
+    expect(skoki, 'bez przeskakiwania poziomów').toEqual([]);
+  });
+});
+
+test('stopka strony głównej: link do deklaracji dostępności', async ({ page }) => {
+  await podstawApi(page, 'puste');
+  await page.goto('/');
+  const link = page.locator('footer.stopka').getByRole('link', { name: 'Deklaracja dostępności' });
+  await expect(link).toHaveCount(1);
+  // Adres musi się zgadzać z linkiem w aplikacji: https://grafit-fitness.pl/dostepnosc.html
+  // (lokalny `serve` przekierowuje na adres bez .html, więc sprawdzamy href, nie adres po kliknięciu).
+  expect(new URL(await link.getAttribute('href'), 'https://grafit-fitness.pl/').href).toBe('https://grafit-fitness.pl/dostepnosc.html');
+  await link.click();
+  await expect(page.locator('h1')).toHaveText('Deklaracja dostępności');
+});

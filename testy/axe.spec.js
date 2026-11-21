@@ -33,3 +33,13 @@ for (const wariant of ['pelne', 'puste', 'blad']) {
     expect(wynik.violations.map((v) => v.id), opis.join('\n')).toEqual([]);
   });
 }
+
+// Deklaracja dostępności: strona statyczna, bez API — te same tagi co strona główna.
+test('axe: deklaracja dostępności', async ({ page }) => {
+  await page.goto('/dostepnosc.html');
+  await expect(page.locator('h1')).toHaveText('Deklaracja dostępności');
+  const wynik = await new AxeBuilder({ page }).withTags(TAGI).analyze();
+  const opis = wynik.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`);
+  await test.info().attach('naruszenia', { body: JSON.stringify(opis, null, 2), contentType: 'application/json' });
+  expect(wynik.violations.map((v) => v.id), opis.join('\n')).toEqual([]);
+});
