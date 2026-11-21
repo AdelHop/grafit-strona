@@ -6,7 +6,7 @@ module.exports = {
   ci: {
     collect: {
       staticDistDir: '.',
-      url: ['/index.html'],
+      url: ['/index.html', '/dostepnosc.html'],
       numberOfRuns: 1,
       settings: { onlyCategories: ['accessibility', 'seo', 'best-practices'], chromeFlags: '--headless=new --no-sandbox' },
     },
