@@ -60,20 +60,19 @@ test('NVDA: cennik → najbliższe zajęcia → dopisz się', async ({ page, nvd
   await page.waitForTimeout(4000);
   const ogloszenie = [...(await nvda.spokenPhraseLog())];
 
-  // 2. Ścieżka nagłówkami.
-  await nvda.perform(NA_POCZATEK);
-  await doFrazy(nvda, nvda.keyboardCommands.moveToNextHeading, 'Cennik');
-  await doFrazy(nvda, nvda.keyboardCommands.moveToNextTable, 'Co');
-  await doFrazy(nvda, nvda.keyboardCommands.moveToPreviousHeading, 'Najbliższe zajęcia');
-  await doFrazy(nvda, nvda.keyboardCommands.moveToNextLink, 'Dopisz się');
+  // 2. Ścieżka nagłówkami. Mowa zapisywana zawsze — także gdy krok się nie uda.
+  await nvda.clearSpokenPhraseLog();
+  try {
+    await nvda.perform(NA_POCZATEK);
+    await doFrazy(nvda, nvda.keyboardCommands.moveToNextHeading, 'Cennik');
+    await doFrazy(nvda, nvda.keyboardCommands.moveToNextTable, 'Co');
+    await doFrazy(nvda, nvda.keyboardCommands.moveToPreviousHeading, 'Najbliższe zajęcia');
+    await doFrazy(nvda, nvda.keyboardCommands.moveToNextLink, 'Dopisz się');
+  } finally {
+    zapiszLog(ogloszenie, await nvda.spokenPhraseLog());
+  }
 
   const log = await nvda.spokenPhraseLog();
-  fs.mkdirSync(path.dirname(LOG), { recursive: true });
-  fs.writeFileSync(
-    LOG,
-    ['# Ogłoszenie po wczytaniu grafiku', ...ogloszenie, '', '# Ścieżka', ...log].join('\n') + '\n',
-    'utf8',
-  );
   console.log('--- ogłoszenie grafiku ---\n' + ogloszenie.join('\n'));
   console.log('--- spokenPhraseLog ---\n' + log.join('\n'));
 
