@@ -1,5 +1,5 @@
 // Ścieżka czytnikiem ekranu: nagłówkami do „Cennik” → tabela (nagłówek „Co”) → „Najbliższe zajęcia”
-// → pierwszy „Dopisz się”. Dodatkowo: czy NVDA ogłasza wczytanie grafiku (region aria-live, S3).
+// → pierwszy „Dopisz się”. Dodatkowo: czy NVDA ogłasza wczytanie grafiku (region role="status", S3).
 const fs = require('node:fs');
 const path = require('node:path');
 const { nvdaTest: test } = require('@guidepup/playwright');
@@ -44,7 +44,7 @@ function oczekiwanyZapis() {
 test.use({ viewport: { width: 1280, height: 900 } });
 
 test('NVDA: cennik → najbliższe zajęcia → dopisz się', async ({ page, nvda }) => {
-  // Grafik czeka na sygnał, żeby NVDA był już na stronie, gdy region aria-live się zmieni.
+  // Grafik czeka na sygnał, żeby NVDA był już na stronie, gdy region statusu się zmieni.
   let wypusc;
   const sygnal = new Promise((r) => { wypusc = r; });
   await podstawApi(page, 'pelne');
@@ -85,6 +85,6 @@ test('NVDA: cennik → najbliższe zajęcia → dopisz się', async ({ page, nvd
   expect(mowa).toContain(`Dopisz się do zajęć: ${nazwa}`);
   expect(mowa).toContain(godzina);
 
-  // S3: region aria-live — czy NVDA odczytał treść grafiku bez przenoszenia kursora.
-  expect.soft(ogloszenie.join('\n'), 'NVDA ogłasza wczytany grafik').toContain(nazwa);
+  // S3: region role="status" (#grafik-stan) — czy NVDA ogłosił wczytanie grafiku bez przenoszenia kursora.
+  expect.soft(ogloszenie.join('\n'), 'NVDA ogłasza wczytany grafik').toContain('Wczytano grafik');
 });

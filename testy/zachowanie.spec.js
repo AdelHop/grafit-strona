@@ -309,3 +309,30 @@ test.describe('telefon bez JavaScriptu', () => {
     expect(await pozaEkranem(page), 'elementy poza ekranem').toEqual([]);
   });
 });
+// S3 (4.1.3): po wczytaniu grafiku i sklepu czytnik dostaje krótki komunikat w osobnym regionie
+// role="status" (nie całą listę). Listy same nie są regionami aria-live.
+const KOMUNIKATY = {
+  pelne: { grafik: 'Wczytano grafik: 6 zajęć w 3 dniach.', sklep: 'Wczytano gadżety: 5 produktów.' },
+  puste: { grafik: 'W najbliższych dniach nie ma zajęć.', sklep: 'Gadżety pojawią się tu wkrótce.' },
+  blad: {
+    grafik: 'Nie udało się wczytać grafiku. Pełny grafik jest w aplikacji.',
+    sklep: 'Nie udało się wczytać gadżetów. Zobacz je w aplikacji.',
+  },
+};
+
+test.describe('wczytanie grafiku i sklepu ogłaszane', () => {
+  for (const [wariant, oczekiwane] of Object.entries(KOMUNIKATY)) {
+    test(`wczytanie grafiku i sklepu ogłaszane (${wariant})`, async ({ page }) => {
+      await podstawApi(page, wariant);
+      await page.goto('/');
+      for (const [sekcja, tekst] of Object.entries(oczekiwane)) {
+        const stan = page.locator(`#${sekcja} [role="status"]`);
+        await expect(stan, `region statusu w #${sekcja}`).toHaveCount(1);
+        await expect(stan, `komunikat w #${sekcja}`).toHaveText(tekst);
+      }
+      for (const lista of ['#lista-grafiku', '#lista-sklepu']) {
+        await expect(page.locator(lista), `${lista} bez aria-live (nie czyta całej listy)`).not.toHaveAttribute('aria-live');
+      }
+    });
+  }
+});
