@@ -30,6 +30,9 @@ async function podstawApi(page, wariant) {
       ? route.fulfill({ status: 500, contentType: 'application/json', body: '{"message":"błąd"}' })
       : route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(wariant === 'puste' ? [] : dane()) });
 
+  // Siatka bezpieczeństwa: testy nigdy nie trafiają w produkcję. Trasy dodane później mają
+  // pierwszeństwo, więc podstawione odpowiedzi poniżej działają, a reszta adresów aplikacji jest odcięta.
+  await page.route('https://app.grafit-fitness.pl/**', (route) => route.abort());
   await page.route('**/api/grafit/public/classes', odpowiedz(zajecia));
   await page.route('**/api/grafit/public/shop', odpowiedz(() => czytaj('sklep.json')));
   await page.route('**/*.{png,jpg,webp}', (route) =>
