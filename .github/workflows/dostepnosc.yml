@@ -17,6 +17,17 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run test:html
       - run: npx playwright install --with-deps chromium
       # Testy z testy/nvda pomija testIgnore w playwright.config.js (wymagają Windows i NVDA).
       - run: npx playwright test
+      # Lighthouse używa Chrome preinstalowanego na runnerze ubuntu-latest.
+      - run: npm run test:lighthouse
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: raporty-dostepnosci
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14

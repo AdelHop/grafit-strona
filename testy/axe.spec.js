@@ -1,6 +1,7 @@
 // Axe WCAG 2.2 AA na stronie z podstawionym API grafiku i sklepu: dane pełne, puste i błąd API.
 const { test, expect } = require('@playwright/test');
 const { AxeBuilder } = require('@axe-core/playwright');
+const { createHtmlReport } = require('axe-html-reporter');
 const { podstawApi } = require('./pomocnicze/api');
 
 const TAGI = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22a', 'wcag22aa'];
@@ -26,6 +27,9 @@ for (const wariant of ['pelne', 'puste', 'blad']) {
     const wynik = await new AxeBuilder({ page }).withTags(TAGI).analyze();
     const opis = wynik.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`);
     await test.info().attach('naruszenia', { body: JSON.stringify(opis, null, 2), contentType: 'application/json' });
+    // Czytelny raport HTML (naruszenia, zaliczone, do ręcznej oceny) do pokazania osobom nietechnicznym.
+    const raport = createHtmlReport({ results: wynik, options: { doNotCreateReportFile: true, projectKey: 'GRA-fit' } });
+    await test.info().attach('raport-axe.html', { body: raport, contentType: 'text/html' });
     expect(wynik.violations.map((v) => v.id), opis.join('\n')).toEqual([]);
   });
 }

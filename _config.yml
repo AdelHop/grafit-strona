@@ -6,4 +6,5 @@ exclude:
   - node_modules
   - README.md
   - playwright.config.js
+  - lighthouserc.js
   - docs

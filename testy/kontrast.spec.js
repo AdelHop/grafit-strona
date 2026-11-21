@@ -41,7 +41,13 @@ test('kontrast kolorów strony', async ({ page }) => {
   pary.push({ opis: '.grafik__stan--brak', a: k.brak.kolor, b: k.brak.tlo, min: 4.5 });
   pary.push({ opis: 'stopka .drobne na --czarny', a: k.stopka.kolor, b: k.stopka.tlo, min: 4.5 });
 
-  const wyniki = pary.map((p) => ({ ...p, wynik: Math.round(kontrast(p.a, p.b) * 100) / 100 }));
+  // APCA (projekt WCAG 3) tylko informacyjnie: Lc ≥ 60 dla tekstu ciągłego, ≥ 45 dla dużego i pogrubionego.
+  const { calcAPCA } = await import('apca-w3');
+  const wyniki = pary.map((p) => ({
+    ...p,
+    wynik: Math.round(kontrast(p.a, p.b) * 100) / 100,
+    apcaLc: Math.round(Math.abs(Number(calcAPCA(p.a, p.b))) * 10) / 10,
+  }));
   await test.info().attach('kontrast', { body: JSON.stringify(wyniki, null, 2), contentType: 'application/json' });
   const zaNiskie = wyniki.filter((w) => w.wynik < w.min).map((w) => `${w.opis}: ${w.a} / ${w.b} = ${w.wynik}:1 (min ${w.min}:1)`);
   expect(zaNiskie).toEqual([]);

@@ -1,0 +1,14 @@
+# Konfiguracja IBM Equal Access Accessibility Checker (testy/silniki.spec.js).
+# "versioned" = reguły z dnia wydania zainstalowanej wersji, więc wynik nie zmienia się sam z siebie.
+ruleArchive: versioned
+policies:
+  - WCAG_2_2
+failLevels:
+  - violation
+reportLevels:
+  - violation
+  - potentialviolation
+outputFormat:
+  - json
+outputFolder: test-results/ibm
+outputFilenameTimestamp: false

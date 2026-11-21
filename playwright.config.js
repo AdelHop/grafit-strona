@@ -8,7 +8,11 @@ module.exports = defineConfig({
   testIgnore: 'nvda/**',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  reporter: process.env.CI ? 'github' : 'list',
+  // monocart-reporter: raport HTML z załącznikami (wyniki axe, IBM, Alfa, log czytnika) w jednym miejscu.
+  reporter: [
+    [process.env.CI ? 'github' : 'list'],
+    ['monocart-reporter', { name: 'Dostępność GRA-fit', outputFile: 'playwright-report/index.html' }],
+  ],
   use: { baseURL: ADRES, locale: 'pl-PL', timezoneId: 'Europe/Warsaw' },
   projects: [
     { name: 'telefon', use: { ...devices['Pixel 7'] } },
