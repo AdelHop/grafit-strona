@@ -1,0 +1,7 @@
+[
+  { "name": "Koszulka treningowa GRA-fit z długim rękawem, czarna, unisex", "group": "Odzież", "price_gr": 8900, "image_url": "/api/files/produkty/koszulka-dluga.jpg", "description": "Oddychająca, szybkoschnąca.", "sizes": ["XS", "S", "M", "L", "XL"], "colors": ["czarny"] },
+  { "name": "Koszulka GRA-fit", "group": "Odzież", "price_gr": 6900, "image_url": "/api/files/produkty/koszulka.jpg", "description": "", "sizes": ["S", "M", "L"], "colors": ["biały", "grafitowy"] },
+  { "name": "Bluza z kapturem", "group": "Odzież", "price_gr": 14900, "image_url": "/api/files/produkty/bluza.webp", "description": "Ciepła bluza na drogę na zajęcia.", "sizes": ["M", "L"], "colors": [] },
+  { "name": "Bidon 750 ml", "group": "Akcesoria", "price_gr": 3900, "image_url": "/api/files/produkty/bidon.png", "description": "Bez BPA.", "sizes": [], "colors": ["żółty", "różowy", "niebieski"] },
+  { "name": "Torba sportowa", "group": "Akcesoria", "price_gr": 7900, "image_url": "", "description": "", "sizes": [], "colors": [] }
+]
