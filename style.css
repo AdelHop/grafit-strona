@@ -117,7 +117,9 @@ main:focus { outline: none; }
 
 .kroki { list-style: none; counter-reset: k; padding: 0; margin: 0; }
 .kroki li { counter-increment: k; position: relative; padding: 18px 18px 18px 64px; background: #fff; border-radius: var(--promien); margin-bottom: 12px; }
-.kroki li::before { content: counter(k); position: absolute; left: 18px; top: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--czarny); color: #fff; font-weight: 800; display: grid; place-items: center; }
+/* Kółko z numerem jako float w lewym marginesie (to samo miejsce co left:18px top:16px), nie position:absolute –
+   axe nie ocenia kontrastu tekstu, gdy przodek ma duży pozycjonowany absolutnie ::before z tłem. */
+.kroki li::before { content: counter(k); float: left; margin: -2px 0 0 -46px; width: 32px; height: 32px; border-radius: 50%; background: var(--czarny); color: #fff; font-weight: 800; display: grid; place-items: center; }
 
 /* Zajęcia */
 .grupa { margin-top: 36px; padding-left: 12px; border-left: 4px solid var(--koral); }
