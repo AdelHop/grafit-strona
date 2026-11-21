@@ -1,0 +1,16 @@
+{
+  "name": "grafit-strona",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Narzędzia deweloperskie strony grafit-fitness.pl (testy dostępności). Nie są publikowane.",
+  "scripts": {
+    "test": "playwright test",
+    "test:nvda": "playwright test -c testy/nvda/playwright.config.js"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "~4.14",
+    "@guidepup/playwright": "^0.21.0",
+    "@playwright/test": "^1.65.1",
+    "serve": "^14.2.8"
+  }
+}
