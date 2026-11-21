@@ -24,10 +24,38 @@ Data: 21.11.2026. Gałąź `dostepnosc`, stan strony jak na `main` (8017b30), pr
 
 Wynik: 3 FAIL (telefon), 3 PASS (komputer). Treść z API (grafik, sklep, komunikaty pustego stanu i błędu) nie daje naruszeń axe w żadnym wariancie.
 
-Axe nie mierzy kontrastu obrysu fokusu, zasłonięcia fokusu przez nagłówek, menu na telefonie ani ogłaszania komunikatów — S1–S4 sprawdzają testy zachowania (Task 2).
+Axe nie mierzy kontrastu obrysu fokusu, zasłonięcia fokusu przez nagłówek, menu na telefonie ani ogłaszania komunikatów — S1–S4 sprawdzają testy zachowania (niżej).
+
+## Testy zachowania i kontrastu
+
+Data: 21.11.2026, ten sam stan strony i te same narzędzia co wyżej. Dane `pelne` (w tym nazwa zajęć i nazwa produktu po 60 znaków).
+Polecenie: `npx playwright test zachowanie kontrast`. Pomiary wspólne: `testy/pomocnicze/sprawdzenia.js`.
+
+| Test | Kryterium | telefon | komputer | Wynik / przyczyna FAIL |
+|---|---|---|---|---|
+| klawiatura dochodzi do wszystkiego | 2.1.1, 2.4.3 | PASS | PASS | Tab dochodzi do każdego widocznego `a[href]`, `button`, `summary` w kolejności DOM. Na telefonie menu jest ukryte, więc jego linków nie ma na liście — patrz S4. |
+| fokus widoczny | 2.4.7 | PASS | PASS | Każdy element z fokusem ma obrys (`outline` 3 px). Kontrast obrysu — test kontrastu. |
+| fokus niezasłonięty w obie strony | 2.4.11 | PASS | PASS (także 200%: okno 640×360) | Tab w przód do końca strony i Shift+Tab z powrotem: 0 przypadków całkowitego zasłonięcia przez `.naglowek` (`scroll-padding-top: 76px` działa także wstecz). Ostrzeżenie (telefon): częściowo pod nagłówkiem tylko `div.tabela-owijka`, bo jest wyższa niż okno — dozwolone w AA. **S2 nie potwierdzone.** |
+| 320 px bez przewijania w bok | 1.4.10, 1.4.12, 2.1.1 | FAIL | FAIL | Bez odstępów: strona nie przewija się w bok, nic nie wychodzi poza ekran, długie nazwy (60 znaków) się zawijają; jedyny problem — owijka cennika bez `tabindex="0"` (S7). Z odstępami WCAG: strona przewija się w bok — S8. |
+| odstępy WCAG nie ucinają treści | 1.4.12 | PASS | PASS | Przy oknie domyślnym i 320 px żaden nagłówek, akapit, wiersz grafiku ani nazwa produktu nie jest ucięty przez `overflow: hidden` (karta `.produkt` rośnie z treścią). |
+| cele co najmniej 24 px | 2.5.8 | PASS | PASS | Linki „Facebook”, „Udostępnij na Facebooku” (22 px wysokości) i przycisk „Wyślij link” (27 px) spełniają wyjątek odstępu; linki w zdaniach pominięte zgodnie z wyjątkiem. |
+| link skopiowany ogłaszany | 4.1.3 | FAIL | FAIL | Skrypt zmienia napis przycisku na „Link skopiowany”, ale napis nie jest w regionie `role="status"` / `aria-live` — czytnik tego nie ogłosi. S3. |
+| menu dostępne na telefonie | 2.4.5, 2.1.1 | FAIL | — (tylko telefon) | Z nagłówka Tab dochodzi tylko do „GRA-fit Fitness” i „Zapisz się”; żadna z 6 sekcji menu (`#zajecia` … `#kontakt`) nie jest osiągalna, brak przycisku menu. S4. |
+| przejdź do treści | 2.4.1 | FAIL | FAIL | Pierwszy Tab trafia w „GRA-fit Fitness – strona główna”; linku „Przejdź do treści” nie ma. S4. |
+| kontrast kolorów strony | 1.4.3, 1.4.11 | FAIL | FAIL | Obrys `:focus-visible` `#6899cc`: 2,99:1 na `#ffffff`, 2,72:1 na `#f5f4f1` (min 3:1) — S1. Pozostałe pary przechodzą: `--tekst` 16,83 / 15,30, `--szary-tekst` 6,75 / 6,14, `--czarny` 18,88 / 17,17, „są miejsca” 5,70, „brak miejsc” 6,54, stopka `#999` na `#111` 6,63. |
+
+Wynik: telefon 5 PASS / 5 FAIL, komputer 6 PASS / 4 FAIL (menu tylko na telefonie, 200% tylko na komputerze).
+
+Potwierdzone znaleziska wstępne ze specu: **S1** (kontrast obrysu), **S3** w części „Link skopiowany” (ogłaszanie wczytania grafiku i sklepu oraz błędów pobierania — do sprawdzenia NVDA w Task 3; listy mają już `aria-live="polite"`), **S4** (menu na telefonie i brak „Przejdź do treści”). **S2** nie potwierdzone testem (fokus nie chowa się pod nagłówkiem ani w przód, ani wstecz, także przy 200%).
 
 ## Znaleziska
 
 | # | Kryterium | Znalezisko | Waga | Źródło |
 |---|---|---|---|---|
-| S7 | 2.1.1 | Na telefonie tabela cennika jest szersza niż ekran, a owijka `.tabela-owijka` (`overflow-x: auto`) nie przyjmuje fokusu — bez myszy/dotyku nie da się przewinąć do kolumny „Na co”. Do poprawy: `tabindex="0"`, `role="region"` i nazwa (np. `aria-labelledby` na nagłówek „Cennik”) albo układ tabeli mieszczący się w 320 px. | utrudnia | axe `scrollable-region-focusable`, telefon, wszystkie warianty |
+| S1 | 1.4.11 | Potwierdzone: obrys fokusu `#6899cc` ma 2,99:1 na `#ffffff` i 2,72:1 na `#f5f4f1` (wymagane 3:1). Obrys jest, ale słabo widoczny dla osób słabowidzących. | utrudnia | test `kontrast kolorów strony` |
+| S2 | 2.4.11 | Nie potwierdzone: przy tabowaniu w przód i wstecz (telefon, komputer, 200%) fokus nigdy nie jest całkowicie pod nagłówkiem. Do ponownego sprawdzenia po zmianie nagłówka/menu (Task 4). | — | test `fokus niezasłonięty w obie strony` |
+| S3 | 4.1.3 | Potwierdzone w części: „Link skopiowany” zmienia tylko napis przycisku, poza regionem `role="status"` / `aria-live` — czytnik nie ogłasza. Wczytanie grafiku/sklepu i błędy: listy mają `aria-live="polite"`, ocena ogłaszania — NVDA (Task 3). | drobne | test `link skopiowany ogłaszany` |
+| S4a | 2.4.5, 2.1.1 | Potwierdzone: na ≤ 760 px menu `display: none` bez przycisku menu — z nagłówka nie da się przejść do żadnej z 6 sekcji (do treści można dojść tylko tabując przez całą stronę). | utrudnia | test `menu dostępne na telefonie` |
+| S4b | 2.4.1 | Potwierdzone: brak linku „Przejdź do treści”; pierwszy Tab trafia w logo. Nagłówek ma 2 cele na telefonie i 8 na komputerze, więc obejście bloku dotyczy głównie komputera. | drobne | test `przejdź do treści` |
+| S7 | 2.1.1, 1.4.10 | Tabela cennika (`min-width: 520px`) jest szersza niż okno ≤ 520 px — telefon, a także komputer przy wąskim oknie albo powiększeniu 400% (1280 px / 4 = 320 px CSS; test `320 px bez przewijania w bok` na projekcie `komputer`: owijka 288 px, treść 520 px). Owijka `.tabela-owijka` (`overflow-x: auto`) nie ma `tabindex="0"`, roli ani nazwy. Chromium (od 130) i Firefox same dają fokus przewijanemu obszarowi (test widział Tab na `div.tabela-owijka` na telefonie), ale czytnik ogłasza go bez nazwy, a Safari nie daje fokusu wcale — bez myszy/dotyku nie da się tam przewinąć do kolumny „Na co”. Tabela danych jest wyjątkiem 1.4.10 (układ dwuwymiarowy), więc samo przewijanie tabeli jest dozwolone, o ile obszar jest dostępny z klawiatury. Do poprawy: `tabindex="0"`, `role="region"` i nazwa (np. `aria-labelledby` na nagłówek „Cennik”) albo układ tabeli mieszczący się w 320 px. | utrudnia | axe `scrollable-region-focusable` (telefon, wszystkie warianty); test `320 px bez przewijania w bok` (telefon i komputer) |
+| S8 | 1.4.10, 1.4.12 | Przy 320 px (telefon albo komputer z powiększeniem 400%) z odstępami tekstu WCAG cała strona przewija się w bok. Przyczyna: napisy bez zawijania rozpychają kolumnę — przycisk „Dopisz się do zajęć” (`.grafik__zapis`, `white-space: nowrap`) ma ok. 303 px przy 288 px miejsca, status „są miejsca” / „brak miejsc” (`.grafik__stan`, `nowrap`), a w kontakcie adres e-mail `gra.fit.fitness.krakow@gmail.com` (słowo bez miejsc podziału) — prawe krawędzie wychodzą 8–31 px poza ekran. Bez odstępów WCAG 320 px mieści się. Długie nazwy zajęć i produktów (60 znaków) zawijają się poprawnie. Do poprawy: zawijanie przycisku i statusu przy wąskim ekranie, `overflow-wrap: anywhere` dla adresu e-mail. | utrudnia | test `320 px bez przewijania w bok` (telefon i komputer) |
