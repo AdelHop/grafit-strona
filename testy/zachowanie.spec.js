@@ -258,6 +258,11 @@ test.describe('zachowanie (dane pełne)', () => {
     const h = await page.locator('#cennik h2').boundingBox();
     const n = await page.locator('.naglowek').boundingBox();
     expect(h.y, 'nagłówek „Cennik” widoczny pod nagłówkiem strony').toBeGreaterThanOrEqual(n.y + n.height - 1);
+
+    // Na szerokim ekranie menu jest zawsze widoczne, przycisku nie ma.
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await expect(przycisk, 'przycisk menu ukryty na komputerze').toBeHidden();
+    await expect(menu.locator('a').first()).toBeVisible();
   });
 
   test('przejdź do treści', async ({ page }) => {
