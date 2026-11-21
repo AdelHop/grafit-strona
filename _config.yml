@@ -1,0 +1,9 @@
+# GitHub Pages (Jekyll): narzędzia deweloperskie i dokumentacja nie trafiają na stronę.
+exclude:
+  - package.json
+  - package-lock.json
+  - testy
+  - node_modules
+  - README.md
+  - playwright.config.js
+  - docs
