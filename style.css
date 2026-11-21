@@ -45,7 +45,19 @@ main:focus { outline: none; }
 .menu { display: flex; gap: 22px; margin-left: auto; }
 .menu a { text-decoration: none; font-weight: 600; color: var(--szary-tekst); }
 .menu a:hover { color: var(--czarny); }
-@media (max-width: 760px) { .menu { display: none; } .naglowek .przycisk--maly { margin-left: auto; } }
+.menu-przycisk { font: inherit; font-size: .95rem; font-weight: 700; cursor: pointer; }
+/* Telefon: menu zwinięte pod przyciskiem „Menu” (przycisk pokazuje skrypt menu.js). */
+@media (max-width: 760px) {
+  .naglowek__wnetrze { gap: 10px; }
+  .menu { display: none; }
+  .menu-przycisk { margin-left: auto; }
+  .menu--otwarte { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; margin: 0; padding: 8px 16px 16px; background: #fff; border-bottom: 1px solid var(--linia); box-shadow: 0 12px 24px rgba(0,0,0,.08); }
+  .menu--otwarte a { padding: 12px 4px; border-bottom: 1px solid var(--linia); color: var(--czarny); }
+  .menu--otwarte a:last-child { border-bottom: 0; }
+  .menu-przycisk[hidden] + .menu + .przycisk--maly { margin-left: auto; }
+}
+/* Wąski telefon: zostaje samo logo, nazwa studia jest w opisie linku. */
+@media (max-width: 480px) { .marka span { display: none; } }
 
 /* Przyciski */
 .przycisk {

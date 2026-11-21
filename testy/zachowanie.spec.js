@@ -226,6 +226,39 @@ test.describe('zachowanie (dane pełne)', () => {
     expect(sekcje.filter((s) => !osiagniete.has(s)), 'sekcje menu nieosiągalne Tabem z nagłówka').toEqual([]);
   });
 
+  // Review Focus 3: 320 px z otwartym menu — Esc zamyka i oddaje fokus, wybór sekcji zamyka menu.
+  test('menu na telefonie zamyka Esc i oddaje fokus', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    const przycisk = page.locator('.naglowek button[aria-controls]');
+    await expect(przycisk, 'przycisk menu widoczny').toBeVisible();
+    await expect(przycisk).toHaveAccessibleName(/Menu/);
+    const menu = page.locator('#' + (await przycisk.getAttribute('aria-controls')));
+    await expect(menu, 'aria-controls wskazuje nav.menu').toHaveClass(/\bmenu\b/);
+    await expect(przycisk).toHaveAttribute('aria-expanded', 'false');
+    await expect(menu.locator('a').first(), 'menu zwinięte').toBeHidden();
+
+    await przycisk.click();
+    await expect(przycisk).toHaveAttribute('aria-expanded', 'true');
+    for (const a of await menu.locator('a').all()) await expect(a).toBeVisible();
+    // Otwarte menu nie wychodzi poza ekran.
+    expect(await przewijaPoziomo(page), 'otwarte menu przewija stronę w bok').toBe(false);
+
+    await menu.locator('a').first().focus();
+    await page.keyboard.press('Escape');
+    await expect(przycisk).toHaveAttribute('aria-expanded', 'false');
+    await expect(menu.locator('a').first()).toBeHidden();
+    await expect(przycisk, 'fokus wraca na przycisk menu').toBeFocused();
+
+    // Wybór sekcji zamyka menu, a fokus nie ląduje pod nagłówkiem.
+    await przycisk.click();
+    await menu.locator('a[href="#cennik"]').click();
+    await expect(przycisk).toHaveAttribute('aria-expanded', 'false');
+    await poPrzewinieciu(page);
+    const h = await page.locator('#cennik h2').boundingBox();
+    const n = await page.locator('.naglowek').boundingBox();
+    expect(h.y, 'nagłówek „Cennik” widoczny pod nagłówkiem strony').toBeGreaterThanOrEqual(n.y + n.height - 1);
+  });
+
   test('przejdź do treści', async ({ page }) => {
     await page.keyboard.press('Tab');
     await expect(page.locator(':focus'), 'pierwszy Tab').toHaveAccessibleName(/Przejdź do treści/);
