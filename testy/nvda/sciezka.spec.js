@@ -12,12 +12,25 @@ const NA_POCZATEK = { keyCode: [WindowsKeyCodes.Home], modifiers: [WindowsModifi
 const LOG = path.join(__dirname, '..', '..', 'test-results', 'nvda-spokenPhraseLog.txt');
 
 // Wykonuje komendę NVDA, aż ostatnia wypowiedź zawiera `tekst` (albo skończą się kroki).
+// Po jednym klawiszu NVDA często mówi kilka fraz (np. „tabela…”, „wiersz 1 kolumna 1”, „Co”),
+// więc sprawdzamy wszystkie frazy od ostatniego kroku, nie tylko ostatnią.
 async function doFrazy(nvda, komenda, tekst) {
   for (let i = 0; i < MAKS_KROKOW; i++) {
+    const przed = (await nvda.spokenPhraseLog()).length;
     await nvda.perform(komenda);
-    if ((await nvda.lastSpokenPhrase()).includes(tekst)) return;
+    const nowe = (await nvda.spokenPhraseLog()).slice(przed);
+    if (nowe.some((f) => f.includes(tekst))) return;
   }
   throw new Error(`NVDA nie doszedł do „${tekst}” w ${MAKS_KROKOW} krokach`);
+}
+
+function zapiszLog(ogloszenie, log) {
+  fs.mkdirSync(path.dirname(LOG), { recursive: true });
+  fs.writeFileSync(
+    LOG,
+    ['# Ogłoszenie po wczytaniu grafiku', ...ogloszenie, '', '# Ścieżka', ...log].join('\n') + '\n',
+    'utf8',
+  );
 }
 
 // Godzina pierwszych zajęć z wolnymi miejscami (dane testowe: jutro 08:00 w Warszawie).
