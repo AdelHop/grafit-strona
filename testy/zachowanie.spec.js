@@ -187,7 +187,8 @@ test.describe('zachowanie (dane pełne)', () => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: new URL(page.url()).origin });
     await otworz(page);
     await page.locator('#udostepnij').click();
-    await expect(page.locator('#udostepnij'), 'skrypt zmienia napis przycisku').toHaveText('Link skopiowany');
+    // Plan, Task 4 krok 5: komunikat w osobnym <p role="status">, przycisk zachowuje nazwę.
+    await expect(page.locator('#udostepnij'), 'przycisk zachowuje nazwę').toHaveAccessibleName('Wyślij link');
     const ogloszenie = page
       .locator('[role="status"], [role="alert"], [aria-live="polite"], [aria-live="assertive"]')
       .filter({ hasText: 'Link skopiowany' });
