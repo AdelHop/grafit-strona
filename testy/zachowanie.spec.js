@@ -73,9 +73,16 @@ test.describe('zachowanie (dane pełne)', () => {
     const odwiedzone = [];
     for (let i = 0; i < oczekiwane.length + 20; i++) {
       await page.keyboard.press('Tab');
-      const nr = await nrFokusu(page);
-      if (nr === 'body' || odwiedzone.includes(nr)) break;
-      odwiedzone.push(nr);
+      // Powtórkę poznajemy po samym elemencie (znacznik data-odwiedzony), nie po numerze:
+      // elementy spoza listy (np. dodatkowy tabindex="0") mają wspólne 'bez-nr'.
+      const powtorka = await page.evaluate(() => {
+        const e = document.activeElement;
+        if (e === document.body || e.dataset.odwiedzony) return true;
+        e.dataset.odwiedzony = '1';
+        return false;
+      });
+      if (powtorka) break;
+      odwiedzone.push(await nrFokusu(page));
     }
     const kolejnosc = odwiedzone.filter((n) => n !== 'bez-nr').map(Number);
     const pominiete = oczekiwane.filter((_, i) => !kolejnosc.includes(i));
