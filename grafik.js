@@ -61,12 +61,22 @@
 
   // Udostępnianie linku znajomej (na telefonie otwiera menu udostępniania: WhatsApp, Messenger, Instagram…)
   var przycisk = document.getElementById('udostepnij');
+  // Komunikat w osobnym regionie role="status" — czytnik go ogłosi, a przycisk zachowuje nazwę.
+  var stan = document.getElementById('udostepnij-stan');
+  function komunikat(tekst) {
+    if (!stan) return;
+    stan.textContent = '';
+    setTimeout(function () { stan.textContent = tekst; }, 100);
+  }
   if (przycisk) {
     przycisk.addEventListener('click', function () {
       var dane = { title: 'GRA-fit Fitness', text: 'Kameralne studio treningowe w Krakowie – grupy do 7 osób', url: location.href.split('#')[0] };
       if (navigator.share) { navigator.share(dane).catch(function () {}); return; }
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(dane.url).then(function () { przycisk.textContent = 'Link skopiowany'; });
+        navigator.clipboard.writeText(dane.url).then(
+          function () { komunikat('Link skopiowany'); },
+          function () { komunikat('Nie udało się skopiować linku. Skopiuj adres z paska przeglądarki.'); }
+        );
       }
     });
   }
