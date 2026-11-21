@@ -46,7 +46,7 @@ Polecenie: `npx playwright test zachowanie kontrast`. Pomiary wspólne: `testy/p
 
 Wynik: telefon 5 PASS / 5 FAIL, komputer 6 PASS / 4 FAIL (menu tylko na telefonie, 200% tylko na komputerze).
 
-Potwierdzone znaleziska wstępne ze specu: **S1** (kontrast obrysu), **S3** w części „Link skopiowany” (ogłaszanie wczytania grafiku i sklepu oraz błędów pobierania — do sprawdzenia NVDA w Task 3; listy mają już `aria-live="polite"`), **S4** — brak „Przejdź do treści” (2.4.1); ukryte menu na telefonie potwierdzone jako problem wygody poza AA (S4a). **S2** nie potwierdzone testem (fokus nie chowa się pod nagłówkiem ani w przód, ani wstecz, także przy 200%).
+Potwierdzone znaleziska wstępne ze specu: **S1** (kontrast obrysu), **S3** w części „Link skopiowany” (ogłaszanie wczytania grafiku i sklepu oraz błędów pobierania potwierdzone później testem NVDA — sekcja „NVDA”), **S4** — brak „Przejdź do treści” (2.4.1); ukryte menu na telefonie potwierdzone jako problem wygody poza AA (S4a). **S2** nie potwierdzone testem (fokus nie chowa się pod nagłówkiem ani w przód, ani wstecz, także przy 200%).
 
 ## Znaleziska
 
@@ -54,7 +54,7 @@ Potwierdzone znaleziska wstępne ze specu: **S1** (kontrast obrysu), **S3** w cz
 |---|---|---|---|---|---|
 | S1 | 1.4.11 | Potwierdzone: obrys fokusu `#6899cc` ma 2,99:1 na `#ffffff` i 2,72:1 na `#f5f4f1` (wymagane 3:1). Obrys jest, ale słabo widoczny dla osób słabowidzących. | utrudnia | test `kontrast kolorów strony` | poprawione (4ac9a70): obrys `--czarny` 18,88:1 / 17,17:1, na stopce `#fff` |
 | S2 | 2.4.11 | Nie potwierdzone: przy tabowaniu w przód i wstecz (telefon, komputer, 200%) fokus nigdy nie jest całkowicie pod nagłówkiem. Do ponownego sprawdzenia po zmianie nagłówka/menu (Task 4). | — | test `fokus niezasłonięty w obie strony` | nie dotyczy; po zmianach (przycisk „Menu”, „Przejdź do treści”) test nadal PASS |
-| S3 | 4.1.3 | Potwierdzone w części: „Link skopiowany” zmienia tylko napis przycisku, poza regionem `role="status"` / `aria-live` — czytnik nie ogłasza. Wczytanie grafiku/sklepu i błędy: listy mają `aria-live="polite"`, ocena ogłaszania — NVDA (Task 3). | drobne | test `link skopiowany ogłaszany` | poprawione w części „Link skopiowany” (b7c589d, test 5c41bfc); ogłaszanie grafiku i sklepu — test NVDA gotowy (`testy/nvda/sciezka.spec.js`, asercja „NVDA ogłasza wczytany grafik”), jeszcze nieuruchomiony — sekcja „NVDA” |
+| S3 | 4.1.3 | Potwierdzone: (a) „Link skopiowany” zmieniał tylko napis przycisku, poza regionem `role="status"` / `aria-live` — czytnik nie ogłaszał; (b) wczytanie grafiku i sklepu oraz błędy pobierania — region `aria-live="polite"` na całej liście z podmienianą treścią, NVDA w Edge nie ogłosił nic przez 4 s (sekcja „NVDA”). | utrudnia | test `link skopiowany ogłaszany`; test NVDA `testy/nvda/sciezka.spec.js` (miękka asercja „NVDA ogłasza wczytany grafik” — FAIL) | (a) poprawione (b7c589d, test 5c41bfc); (b) do poprawy: osobny, wizualnie ukryty `role="status"` z krótkim komunikatem |
 | S4a | — (dobra praktyka, poza AA) | Potwierdzone: na ≤ 760 px menu `display: none` bez przycisku menu — z nagłówka nie da się przejść do żadnej z 6 sekcji (do treści można dojść tylko tabując przez całą stronę). **Nie jest niezgodnością WCAG 2.2 AA**: 2.4.5 dotyczy zbioru stron (strona jest jedna), 2.1.1 jest spełnione (test `klawiatura dochodzi do wszystkiego` — PASS), a obejście bloków (2.4.1) jest w S4b. Poprawiamy dla wygody, deklaracja tego nie wymienia jako niezgodności. | utrudnia (wygoda, nie zgodność) | test `menu dostępne na telefonie` | poprawione (6993f45, afe8e3d): przycisk „Menu” z `aria-expanded`/`aria-controls`, Esc, zwijanie po wyborze |
 | S4b | 2.4.1 | Potwierdzone: brak linku „Przejdź do treści”; pierwszy Tab trafia w logo. Nagłówek ma 2 cele na telefonie i 8 na komputerze, więc obejście bloku dotyczy głównie komputera. | drobne | test `przejdź do treści` | poprawione (1b2d96e) |
 | S7 | 2.1.1, 1.4.10 | Tabela cennika (`min-width: 520px`) jest szersza niż okno ≤ 520 px — telefon, a także komputer przy wąskim oknie albo powiększeniu 400% (1280 px / 4 = 320 px CSS; test `320 px bez przewijania w bok` na projekcie `komputer`: owijka 288 px, treść 520 px). Owijka `.tabela-owijka` (`overflow-x: auto`) nie ma `tabindex="0"`, roli ani nazwy. Chromium (od 130) i Firefox same dają fokus przewijanemu obszarowi (test widział Tab na `div.tabela-owijka` na telefonie), ale czytnik ogłasza go bez nazwy, a Safari nie daje fokusu wcale — bez myszy/dotyku nie da się tam przewinąć do kolumny „Na co”. Tabela danych jest wyjątkiem 1.4.10 (układ dwuwymiarowy), więc samo przewijanie tabeli jest dozwolone, o ile obszar jest dostępny z klawiatury. Do poprawy: `tabindex="0"`, `role="region"` i nazwa (np. `aria-labelledby` na nagłówek „Cennik”) albo układ tabeli mieszczący się w 320 px. | utrudnia | axe `scrollable-region-focusable` (telefon, wszystkie warianty); test `320 px bez przewijania w bok` (telefon i komputer) | poprawione (ef364b7): `tabindex="0"`, `role="region"`, `aria-labelledby` → „Cennik” |
@@ -75,9 +75,43 @@ Test: `testy/nvda/sciezka.spec.js`, konfiguracja `testy/nvda/playwright.config.j
 
 Ścieżka: grafik wstrzymany do chwili, gdy NVDA jest na stronie → po wczytaniu grafiku 4 s nasłuchu (czy region `aria-live="polite"` zostaje ogłoszony — otwarta część S3) → Ctrl+Home → nagłówki (H) do „Cennik” → tabela (T) z nagłówkiem „Co” → nagłówki wstecz (Shift+H) do „Najbliższe zajęcia” → linki (K) do pierwszego „Dopisz się”. Asercje na `spokenPhraseLog`: „Cennik”, „Co”, „Najbliższe zajęcia”, „Dopisz się do zajęć: Trening funkcjonalny” i „08:00” (godzina w Warszawie — dane testowe liczą przesunięcie strefy dla danej daty, a1d34b1). Ogłoszenie grafiku sprawdzane miękko (`expect.soft`), żeby wynik S3 nie zatrzymywał reszty ścieżki. Cała mowa zapisuje się do `test-results/nvda-spokenPhraseLog.txt`.
 
-**Stan 21.11.2026: test nieuruchomiony — dwie blokady środowiska:**
+**Wynik 21.11.2026 (przebieg Adeli, NVDA w zainstalowanym Edge):** ścieżka **PASS** — wszystkie twarde asercje zaliczone. Miękkie sprawdzenie S3 **FAIL**: po wczytaniu grafiku NVDA przez 4 s nie powiedział nic (sekcja „Ogłoszenie po wczytaniu grafiku” w logu jest pusta).
 
-1. Brak zasobów Guidepup: `@guidepup/guidepup` 0.40 uruchamia własną, przenośną kopię NVDA z `%LOCALAPPDATA%\guidepup\nvda\all\0.2.1-2026.3\extracted\nvda.exe`, a nie NVDA z `C:\Program Files\NVDA`. Po `npx @guidepup/setup setup` tej kopii nie ma — trzeba jeszcze, na komputerze Adeli: `npx @guidepup/setup install` (pobiera `guidepup-nvda-0.2.1-2026.3.zip` z GitHuba `guidepup/nvda`, sprawdza sumę SHA-256).
-2. Chromium z oknem (`headless: false`) nie startuje w środowisku agenta (brak dostępu do pulpitu; bez okna startuje). Test trzeba uruchomić z własnego terminala Adeli.
+Blokady opisane wcześniej (brak przenośnej kopii NVDA Guidepup, Chromium z oknem w środowisku agenta) usunięte: Adela wykonała `npx @guidepup/setup install` i uruchomiła test z własnego terminala na Edge (6f52c1b).
 
-Po uruchomieniu: wkleić tu `test-results/nvda-spokenPhraseLog.txt` z przebiegu zaliczonego, uwagi do niejasnej mowy i ewentualne znaleziska S9+, zaktualizować status S3.
+Log ścieżki (`test-results/nvda-spokenPhraseLog.txt`; nagłówki poziomu 3–4 sekcji „Dlaczego GRA-fit” i „Zajęcia” streszczone):
+
+```
+# Ogłoszenie po wczytaniu grafiku
+(cisza)
+
+# Ścieżka
+kotwiczny, link, Przejdź do treści
+główne punkt orientacyjny, Kameralne studio treningowe w Krakowie, nagłówek, poziom 1
+Dlaczego GRA-fit, nagłówek, poziom 2
+[4 nagłówki poziomu 3 sekcji „Dlaczego GRA-fit”]
+Pierwszy raz? Zacznij od Intro, nagłówek, poziom 2
+Zajęcia, nagłówek, poziom 2
+[5 grup zajęć (poziom 3) i 18 zajęć (poziom 4) — od „Siła i sylwetka / Trening Funkcjonalny” do „Warsztaty / Postawa to Podstawa”]
+Najbliższe zajęcia, nagłówek, poziom 2
+NIEDZIELA, 22 LISTOPADA, nagłówek, poziom 3
+PONIEDZIAŁEK, 23 LISTOPADA, nagłówek, poziom 3
+WTOREK, 24 LISTOPADA, nagłówek, poziom 3
+Cennik, nagłówek, poziom 2
+Cennik, obszar, tabela, z 10 wierszami i 3 kolumnami, linia 1, kolumna 1, CO
+Cennik, nagłówek, poziom 2
+WTOREK, 24 LISTOPADA, nagłówek, poziom 3
+PONIEDZIAŁEK, 23 LISTOPADA, nagłówek, poziom 3
+NIEDZIELA, 22 LISTOPADA, nagłówek, poziom 3
+Najbliższe zajęcia, nagłówek, poziom 2
+Dopisz się do zajęć: Trening funkcjonalny, niedziela, 22 listopada 08:00, link
+```
+
+Uwagi do mowy:
+
+- Mowa jasna: hierarchia nagłówków czytelna, „Przejdź do treści” pierwsze, obszar cennika ma nazwę „Cennik” (S7), link zapisu mówi nazwę zajęć, dzień i godzinę.
+- Nagłówki tabeli i dni grafiku czytane wielkimi literami („CO”, „NIEDZIELA, 22 LISTOPADA”) — skutek `text-transform: uppercase`; bez znaczenia dla zrozumienia.
+- Dni grafiku czytane poprawnie (dzień tygodnia, data, odmiana miesiąca).
+- Nowych znalezisk (S9+) brak.
+
+S3 — wczytanie grafiku: potwierdzone. Region `aria-live="polite"` obejmował całą listę, a treść była podmieniana (`textContent = ''` + `appendChild`); NVDA w Edge nic nie ogłosił. Sklep używa tego samego mechanizmu (`#lista-sklepu`), więc znalezisko obejmuje też wczytanie sklepu i komunikaty o błędzie pobierania. Waga podniesiona do „utrudnia”: osoba z czytnikiem nie wie, że grafik się wczytał ani że wystąpił błąd.
