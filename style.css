@@ -32,6 +32,12 @@ h4 { font-size: 1.1rem; }
 .kontener { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
 .waski { max-width: 760px; }
 
+/* Link „Przejdź do treści”: schowany nad oknem, przy fokusie z klawiatury pojawia się tuż pod nagłówkiem. */
+.przejdz { position: absolute; top: 74px; left: 16px; z-index: 20; background: var(--czarny); color: #fff; font-weight: 700; text-decoration: none; padding: 10px 18px; border-radius: 999px; transform: translateY(-300px); }
+.przejdz:focus { transform: none; }
+/* Cel linku „Przejdź do treści” — sam obszar treści nie potrzebuje obrysu. */
+main:focus { outline: none; }
+
 /* Nagłówek */
 .naglowek { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); border-bottom: 1px solid var(--linia); }
 .naglowek__wnetrze { display: flex; align-items: center; gap: 20px; height: 64px; }
