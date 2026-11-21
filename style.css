@@ -54,10 +54,16 @@ main:focus { outline: none; }
   .menu--otwarte { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; margin: 0; padding: 8px 16px 16px; background: #fff; border-bottom: 1px solid var(--linia); box-shadow: 0 12px 24px rgba(0,0,0,.08); }
   .menu--otwarte a { padding: 12px 4px; border-bottom: 1px solid var(--linia); color: var(--czarny); }
   .menu--otwarte a:last-child { border-bottom: 0; }
+  /* Bez JavaScriptu przycisk „Menu” zostaje ukryty: linki sekcji widoczne w nagłówku i zawijane do kolejnych linii.
+     Wyższy nagłówek nie jest wtedy przyklejony, żeby nie zasłaniał treści. */
+  .naglowek:has(.menu-przycisk[hidden]) { position: static; }
+  .naglowek__wnetrze:has(.menu-przycisk[hidden]) { flex-wrap: wrap; height: auto; min-height: 64px; padding-top: 10px; padding-bottom: 10px; row-gap: 6px; }
+  .menu-przycisk[hidden] + .menu { display: flex; flex-wrap: wrap; flex-basis: 100%; gap: 4px 18px; margin-left: 0; }
   .menu-przycisk[hidden] + .menu + .przycisk--maly { margin-left: auto; }
 }
-/* Wąski telefon: zostaje samo logo, nazwa studia jest w opisie linku. */
-@media (max-width: 480px) { .marka span { display: none; } }
+/* Wąski telefon z działającym menu: zostaje samo logo, nazwa studia jest w opisie linku.
+   Bez JavaScriptu napis zostaje — menu jest wtedy w osobnej linii, więc się mieści. */
+@media (max-width: 480px) { .naglowek__wnetrze:not(:has(.menu-przycisk[hidden])) .marka span { display: none; } }
 
 /* Przyciski */
 .przycisk {

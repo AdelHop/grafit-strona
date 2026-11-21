@@ -273,3 +273,38 @@ test.describe('zachowanie (dane pełne)', () => {
     expect(await page.evaluate(() => !!document.activeElement.closest('main')), 'fokus w main po Enter').toBe(true);
   });
 });
+
+// Telefon bez JavaScriptu: przycisk „Menu” zostaje ukryty, więc linki sekcji muszą być widoczne w nagłówku.
+test.describe('telefon bez JavaScriptu', () => {
+  test.use({ javaScriptEnabled: false });
+  test.beforeEach(async ({ page }, info) => {
+    test.skip(info.project.name !== 'telefon', 'menu zwijane dotyczy telefonu');
+    await page.setViewportSize({ width: 320, height: 640 });
+    await page.goto('/');
+  });
+
+  test('linki sekcji osiągalne Tabem z nagłówka, bez przewijania w bok', async ({ page }) => {
+    await expect(page.locator('.menu-przycisk'), 'przycisk „Menu” ukryty bez JS').toBeHidden();
+    const sekcje = await page.locator('nav.menu a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+    const osiagniete = new Set();
+    let byloWNaglowku = false;
+    for (let i = 0; i < 30; i++) {
+      await page.keyboard.press('Tab');
+      const stan = await page.evaluate(() => {
+        const e = document.activeElement;
+        return { wNaglowku: !!e.closest('.naglowek'), href: e.getAttribute('href') };
+      });
+      if (!stan.wNaglowku) {
+        if (byloWNaglowku) break;
+        continue;
+      }
+      byloWNaglowku = true;
+      if (stan.href) osiagniete.add(stan.href);
+    }
+    expect(sekcje.filter((s) => !osiagniete.has(s)), 'sekcje menu nieosiągalne Tabem z nagłówka').toEqual([]);
+    for (const a of await page.locator('nav.menu a').all()) await expect(a).toBeVisible();
+    await expect(page.locator('.marka span'), 'napis „GRA-fit Fitness” mieści się przy 320 px').toBeVisible();
+    expect(await przewijaPoziomo(page), 'strona przewija się w bok').toBe(false);
+    expect(await pozaEkranem(page), 'elementy poza ekranem').toEqual([]);
+  });
+});
