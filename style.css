@@ -141,7 +141,9 @@ address { font-style: normal; font-size: 1.1rem; margin-bottom: 12px; }
 .stopka p { margin: 4px 0; }
 .stopka .drobne { color: #999; margin-top: 14px; }
 
-:focus-visible { outline: 3px solid var(--niebieski); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--czarny); outline-offset: 3px; }
+/* Na ciemnej stopce czarny obrys by zniknął. */
+.stopka :focus-visible { outline-color: #fff; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .przycisk { transition: none; } }
 
 /* Sklep: gadżety reklamowe z aplikacji studia */
