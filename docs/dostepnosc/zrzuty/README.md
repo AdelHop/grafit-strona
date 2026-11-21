@@ -70,3 +70,15 @@ Osobno prosimy o decyzję w dwóch sprawach:
      tabela się mieści, ale ten przystanek zostaje — to ten sam kod strony.
    - **Jeśli się Pani nie zgodzi:** na telefonie tabeli nie da się przesunąć klawiaturą
      (część cen może być wtedy niedostępna dla osób bez myszki i bez dotyku).
+
+## Deklaracja dostępności (21.11.2026)
+
+Nowa podstrona `grafit-fitness.pl/dostepnosc.html`, opublikowana 21.11.2026 decyzją Adeli Hopek (wykonawczyni).
+Zrzuty całej podstrony: `po-telefon-deklaracja.png` i `po-komputer-deklaracja.png` (zrzutów „przed” nie ma, bo podstrony wcześniej nie było).
+
+- Wygląd jak na stronie głównej: ten sam nagłówek z menu, te same kolory i czcionki, ta sama stopka.
+- Treść: stan dostępności strony i aplikacji, lista znanych problemów obecnej aplikacji (poprawki 6.12.2026),
+  kontakt do zgłoszeń (telefon, e-mail i adres studia — te same co w sekcji Kontakt), termin odpowiedzi
+  (najpóźniej 7 dni), skarga i zawiadomienie do Prezesa Zarządu PFRON.
+- Na stronie głównej w stopce pojawia się link „Deklaracja dostępności” (obok „Regulamin przy rejestracji”).
+  Nic więcej na stronie głównej się nie zmienia.
