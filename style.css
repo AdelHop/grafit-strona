@@ -130,10 +130,14 @@ main:focus { outline: none; }
 .grafik__zapis { white-space: nowrap; }
 /* Bez wolnych miejsc nie ma przycisku: status zajmuje też jego kolumnę. */
 .grafik__stan--brak { grid-column: 3 / -1; justify-self: end; }
+/* Telefon: godzina, nazwa i status w jednej linii, przycisk pod spodem na całą szerokość.
+   Przy powiększonym tekście status przechodzi do kolejnej linii zamiast wypychać wiersz poza ekran. */
 @media (max-width: 600px) {
-  .grafik__wiersz { grid-template-columns: 56px 1fr auto; }
-  .grafik__zapis { grid-column: 1 / -1; justify-self: stretch; text-align: center; }
-  .grafik__stan--brak { grid-column: auto; }
+  .grafik__wiersz { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .grafik__godz { flex: 0 0 56px; }
+  .grafik__wiersz > span:nth-child(2) { flex: 1 1 0; }
+  .grafik__stan { margin-left: auto; white-space: normal; }
+  .grafik__zapis { flex: 1 1 100%; text-align: center; white-space: normal; }
 }
 
 /* Cennik */
@@ -151,6 +155,8 @@ details p { margin: 0 0 16px; color: var(--szary-tekst); }
 
 /* Kontakt */
 address { font-style: normal; font-size: 1.1rem; margin-bottom: 12px; }
+/* Długi adres e-mail łamie się na wąskim ekranie zamiast wychodzić poza niego. */
+.kontakt__email { overflow-wrap: anywhere; }
 .spolecznosci { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 20px; font-weight: 700; }
 
 /* Stopka */
