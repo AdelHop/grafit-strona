@@ -157,8 +157,9 @@ test.describe('zachowanie (dane pełne)', () => {
       await page.addStyleTag({ content: ODSTEPY_WCAG });
       const uciete = await page.evaluate(() => {
         const ukrywa = (s) => /(hidden|clip)/.test(s.overflowX + ' ' + s.overflowY);
+        // .tylko-czytnik jest celowo ucięty do 1 px (komunikaty role="status" dla czytnika).
         return [...document.querySelectorAll('h1, h2, h3, h4, p, .grafik__wiersz span, .produkt h3')]
-          .filter((e) => e.getBoundingClientRect().width > 0)
+          .filter((e) => e.getBoundingClientRect().width > 0 && !e.classList.contains('tylko-czytnik'))
           .filter((e) => {
             const s = getComputedStyle(e);
             if (ukrywa(s) && (e.scrollWidth > e.clientWidth + 1 || e.scrollHeight > e.clientHeight + 1)) return true;

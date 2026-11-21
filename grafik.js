@@ -22,6 +22,20 @@
     lista.appendChild(el('p', 'grafik__info', tekst));
   }
 
+  // Krótki komunikat po wczytaniu w osobnym regionie role="status" (czytnik nie czyta całej listy).
+  // Wpisany z opóźnieniem, żeby czytnik zauważył zmianę już wyrenderowanej strony.
+  var stanGrafiku = document.getElementById('grafik-stan');
+  function ogloszenie(tekst) {
+    if (!stanGrafiku) return;
+    stanGrafiku.textContent = '';
+    setTimeout(function () { stanGrafiku.textContent = tekst; }, 100);
+  }
+
+  function ileZajec(n) {
+    var r10 = n % 10, r100 = n % 100;
+    return n + (n !== 1 && (r10 < 2 || r10 > 4 || (r100 >= 12 && r100 <= 14)) ? ' zajęć' : ' zajęcia');
+  }
+
   fetch(ADRES)
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (zajecia) {
@@ -36,7 +50,12 @@
         if (!dni[klucz]) { dni[klucz] = []; kolejnosc.push(klucz); }
         dni[klucz].push({ start: start, nazwa: z.nazwa, miejsca: z.sa_miejsca });
       });
-      if (!kolejnosc.length) { info('W najbliższych dniach nie ma jeszcze zajęć w grafiku. Zajrzyj do aplikacji.'); return; }
+      if (!kolejnosc.length) {
+        info('W najbliższych dniach nie ma jeszcze zajęć w grafiku. Zajrzyj do aplikacji.');
+        ogloszenie('W najbliższych dniach nie ma zajęć.');
+        return;
+      }
+      var ile = 0;
       lista.textContent = '';
       kolejnosc.forEach(function (klucz) {
         var blok = el('div', 'grafik__dzien');
@@ -53,11 +72,17 @@
             w.appendChild(zapis);
           }
           blok.appendChild(w);
+          ile++;
         });
         lista.appendChild(blok);
       });
+      var dniTekst = kolejnosc.length === 1 ? '1 dniu' : kolejnosc.length + ' dniach';
+      ogloszenie('Wczytano grafik: ' + ileZajec(ile) + ' w ' + dniTekst + '.');
     })
-    .catch(function () { info('Nie udało się wczytać grafiku. Pełny grafik jest w aplikacji.'); });
+    .catch(function () {
+      info('Nie udało się wczytać grafiku. Pełny grafik jest w aplikacji.');
+      ogloszenie('Nie udało się wczytać grafiku. Pełny grafik jest w aplikacji.');
+    });
 
   // Udostępnianie linku znajomej (na telefonie otwiera menu udostępniania: WhatsApp, Messenger, Instagram…)
   var przycisk = document.getElementById('udostepnij');
