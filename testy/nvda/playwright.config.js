@@ -20,7 +20,9 @@ module.exports = defineConfig({
     headless: false,
     video: 'retain-on-failure',
   },
-  projects: [{ name: 'nvda-chromium', use: { browserName: 'chromium' } }],
+  // Zainstalowany Edge zamiast Chromium z Playwrighta: Inteligentna kontrola aplikacji w Windows blokuje
+  // niepodpisany chrome.exe z ms-playwright (kod wyjścia 0xC0E90002), a Edge jest podpisany.
+  projects: [{ name: 'nvda-edge', use: { browserName: 'chromium', channel: 'msedge' } }],
   webServer: {
     command: 'npx serve -l 4173 --no-clipboard .',
     cwd: path.join(__dirname, '..', '..'),
