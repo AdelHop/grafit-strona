@@ -192,6 +192,8 @@ test.describe('zachowanie (dane pełne)', () => {
     const sekcje = await page.locator('nav.menu a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
     const osiagniete = new Set();
     let rozwinieto = false;
+    let byloWNaglowku = false;
+    // Elementy przed nagłówkiem (np. „Przejdź do treści”) pomijamy; koniec, gdy fokus wyjdzie z nagłówka.
     for (let i = 0; i < 30; i++) {
       await page.keyboard.press('Tab');
       const stan = await page.evaluate(() => {
@@ -203,7 +205,11 @@ test.describe('zachowanie (dane pełne)', () => {
           rozwiniete: e.getAttribute('aria-expanded') === 'true',
         };
       });
-      if (!stan.wNaglowku) break;
+      if (!stan.wNaglowku) {
+        if (byloWNaglowku) break;
+        continue;
+      }
+      byloWNaglowku = true;
       if (stan.href) osiagniete.add(stan.href);
       if (stan.menu && !stan.rozwiniete && !rozwinieto) {
         await page.keyboard.press('Enter');
