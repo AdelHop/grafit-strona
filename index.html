@@ -86,6 +86,7 @@
 </script>
 </head>
 <body>
+<a class="przejdz" href="#gora">Przejdź do treści</a>
 
 <header class="naglowek">
   <div class="kontener naglowek__wnetrze">
@@ -93,7 +94,8 @@
       <img src="obrazy/logo.png" alt="" width="44" height="44">
       <span>GRA-fit Fitness</span>
     </a>
-    <nav class="menu" aria-label="Menu">
+    <button type="button" class="przycisk przycisk--jasny przycisk--maly menu-przycisk" aria-expanded="false" aria-controls="menu" hidden>Menu</button>
+    <nav class="menu" id="menu" aria-label="Menu">
       <a href="#zajecia">Zajęcia</a>
       <a href="#grafik">Grafik</a>
       <a href="#cennik">Cennik</a>
@@ -105,7 +107,7 @@
   </div>
 </header>
 
-<main id="gora">
+<main id="gora" tabindex="-1">
 
 <section class="bohater">
   <div class="kontener bohater__wnetrze">
@@ -213,9 +215,10 @@
   <div class="kontener">
     <h2>Najbliższe zajęcia</h2>
     <p class="wstep">Grafik na żywo z aplikacji studia. Zapisujesz się w aplikacji po założeniu konta.</p>
-    <div id="lista-grafiku" class="grafik" aria-live="polite">
+    <div id="lista-grafiku" class="grafik">
       <p class="grafik__info">Wczytuję grafik…</p>
     </div>
+    <p id="grafik-stan" class="tylko-czytnik" role="status"></p>
     <noscript><p>Grafik zobaczysz w aplikacji: <a href="https://app.grafit-fitness.pl/">app.grafit-fitness.pl</a>.</p></noscript>
     <a class="przycisk" href="https://app.grafit-fitness.pl/">Otwórz pełny grafik w aplikacji</a>
   </div>
@@ -223,8 +226,8 @@
 
 <section class="sekcja" id="cennik">
   <div class="kontener">
-    <h2>Cennik</h2>
-    <div class="tabela-owijka">
+    <h2 id="cennik-tytul">Cennik</h2>
+    <div class="tabela-owijka" tabindex="0" role="region" aria-labelledby="cennik-tytul">
     <table class="cennik">
       <thead><tr><th scope="col">Co</th><th scope="col">Cena</th><th scope="col">Na co</th></tr></thead>
       <tbody>
@@ -249,9 +252,10 @@
     <h2>Gadżety reklamowe</h2>
     <p class="wstep">Bluzy, koszulki, torby i drobiazgi GRA-fit. Zamawiasz w aplikacji, płacisz jak za karnet i odbierasz w studiu.</p>
     <div id="sklep-grupy" class="sklep__grupy" role="group" aria-label="Grupy gadżetów"></div>
-    <div id="lista-sklepu" class="sklep" aria-live="polite">
+    <div id="lista-sklepu" class="sklep">
       <p class="grafik__info">Wczytuję gadżety…</p>
     </div>
+    <p id="sklep-stan" class="tylko-czytnik" role="status"></p>
     <noscript><p>Gadżety zobaczysz w aplikacji: <a href="https://app.grafit-fitness.pl/sklep">app.grafit-fitness.pl/sklep</a>.</p></noscript>
     <a class="przycisk" href="https://app.grafit-fitness.pl/sklep">Zamów w aplikacji</a>
   </div>
@@ -281,8 +285,8 @@
         ul. Myśliwska 59/U2<br>
         30-718 Kraków
       </address>
-      <p><a href="tel:+48693456308">tel. 693 456 308</a></p>
-      <p><a href="mailto:gra.fit.fitness.krakow@gmail.com">gra.fit.fitness.krakow@gmail.com</a></p>
+      <p><a href="tel:+48693456308">tel.&nbsp;693&nbsp;456&nbsp;308</a></p>
+      <p class="kontakt__email"><a href="mailto:gra.fit.fitness.krakow@gmail.com">gra.fit.fitness.krakow@gmail.com</a></p>
       <p><a class="przycisk przycisk--jasny" href="https://www.google.com/maps/search/?api=1&amp;query=My%C5%9Bliwska+59%2C+Krak%C3%B3w" rel="noopener">Pokaż na mapie</a></p>
     </div>
     <div>
@@ -297,6 +301,7 @@
         <li><a id="udostepnij-fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgrafit-fitness.pl%2F" rel="noopener">Udostępnij na Facebooku</a></li>
         <li><button type="button" id="udostepnij" class="link">Wyślij link</button></li>
       </ul>
+      <p id="udostepnij-stan" class="drobne" role="status"></p>
     </div>
   </div>
 </section>
@@ -306,12 +311,13 @@
 <footer class="stopka">
   <div class="kontener">
     <p class="paski" aria-hidden="true"><i></i><i></i><i></i></p>
-    <p>GRA-fit Fitness · ul. Myśliwska 59/U2, Kraków · <a href="tel:+48693456308">tel. 693 456 308</a></p>
+    <p>GRA-fit Fitness · ul. Myśliwska 59/U2, Kraków · <a href="tel:+48693456308">tel.&nbsp;693&nbsp;456&nbsp;308</a></p>
     <p><a href="https://app.grafit-fitness.pl/">Aplikacja studia</a> · <a href="https://app.grafit-fitness.pl/rejestracja">Regulamin przy rejestracji</a></p>
     <p class="drobne">Created by Adela Hopek</p>
   </div>
 </footer>
 
+<script src="menu.js" defer></script>
 <script src="grafik.js" defer></script>
 <script src="sklep.js" defer></script>
 </body>

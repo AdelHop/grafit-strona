@@ -1,0 +1,8 @@
+[
+  { "dzien": 1, "godzina": "08:00", "nazwa": "Trening funkcjonalny", "sa_miejsca": true },
+  { "dzien": 1, "godzina": "18:30", "nazwa": "Pilates oraz zdrowy kręgosłup z elementami TRX – grupa ranna", "sa_miejsca": true },
+  { "dzien": 2, "godzina": "09:00", "nazwa": "Boks Intro", "sa_miejsca": false },
+  { "dzien": 2, "godzina": "17:00", "nazwa": "Zajęcia dla kobiet w ciąży", "sa_miejsca": true },
+  { "dzien": 3, "godzina": "10:00", "nazwa": "Pelvi Balance", "sa_miejsca": false },
+  { "dzien": 3, "godzina": "19:00", "nazwa": "Stretching", "sa_miejsca": true }
+]

@@ -1,0 +1,19 @@
+- banner:
+  - link "GRA-fit Fitness – strona główna":
+    - /url: "#gora"
+    - text: ""
+  - navigation "Menu":
+    - link "Zajęcia":
+      - /url: "#zajecia"
+    - link "Grafik":
+      - /url: "#grafik"
+    - link "Cennik":
+      - /url: "#cennik"
+    - link "Sklep":
+      - /url: "#sklep"
+    - link "Pytania":
+      - /url: "#pytania"
+    - link "Kontakt":
+      - /url: "#kontakt"
+  - link "Zapisz się":
+    - /url: https://app.grafit-fitness.pl/rejestracja

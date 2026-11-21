@@ -20,6 +20,20 @@
     lista.appendChild(el('p', 'grafik__info', tekst));
   }
 
+  // Krótki komunikat po wczytaniu w osobnym regionie role="status" (czytnik nie czyta całej listy).
+  var stanSklepu = document.getElementById('sklep-stan');
+  function ogloszenie(tekst) {
+    if (!stanSklepu) return;
+    stanSklepu.textContent = '';
+    setTimeout(function () { stanSklepu.textContent = tekst; }, 100);
+  }
+
+  function ileProduktow(n) {
+    var r10 = n % 10, r100 = n % 100;
+    if (n === 1) return '1 produkt';
+    return n + (r10 >= 2 && r10 <= 4 && !(r100 >= 12 && r100 <= 14) ? ' produkty' : ' produktów');
+  }
+
   function pokaz() {
     lista.textContent = '';
     produkty.filter(function (p) { return !wybrana || p.group === wybrana; }).forEach(function (p) {
@@ -63,11 +77,19 @@
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (dane) {
       produkty = dane || [];
-      if (!produkty.length) { info('Gadżety pojawią się tu wkrótce. Zajrzyj do aplikacji.'); return; }
+      if (!produkty.length) {
+        info('Gadżety pojawią się tu wkrótce. Zajrzyj do aplikacji.');
+        ogloszenie('Gadżety pojawią się tu wkrótce.');
+        return;
+      }
       var grupy = [];
       produkty.forEach(function (p) { if (p.group && grupy.indexOf(p.group) === -1) grupy.push(p.group); });
       przyciski(grupy);
       pokaz();
+      ogloszenie('Wczytano gadżety: ' + ileProduktow(produkty.length) + '.');
     })
-    .catch(function () { info('Nie udało się wczytać gadżetów. Zobacz je w aplikacji.'); });
+    .catch(function () {
+      info('Nie udało się wczytać gadżetów. Zobacz je w aplikacji.');
+      ogloszenie('Nie udało się wczytać gadżetów. Zobacz je w aplikacji.');
+    });
 })();
