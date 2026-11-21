@@ -1,4 +1,6 @@
-# Zmiany na stronie — zrzuty do akceptacji
+# Zmiany na stronie — zrzuty przed i po
+
+**Decyzja 21.11.2026:** wszystkie zmiany, także z „Do decyzji”, przyjęła Adela Hopek (wykonawczyni); wdrożone 21.11.2026.
 
 Pliki `przed-*.png` pokazują stronę taką, jaka jest dziś, a `po-*.png` stronę po poprawkach.
 W nazwie jest też urządzenie: `telefon` albo `komputer`. Pliki `320-*` to bardzo wąski telefon.

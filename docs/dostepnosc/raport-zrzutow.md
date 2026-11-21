@@ -1,12 +1,14 @@
-# Zmiany na stronie grafit-fitness.pl — do akceptacji
+# Zmiany na stronie grafit-fitness.pl — do wiadomości
 
 Data: 21.11.2026
+
+> **Decyzja:** wszystkie zmiany przyjęła 21.11.2026 Adela Hopek (wykonawczyni), która bierze za nie odpowiedzialność. Raport jest do wiadomości właścicielki — uwagi są mile widziane, ale nie wstrzymują wdrożenia. Zmiany działają na stronie od 21.11.2026.
 
 Wprowadzamy kilka drobnych zmian, żeby ze strony mogły wygodnie korzystać także osoby niewidome, słabowidzące i te, które poruszają się po stronie klawiaturą zamiast myszką — tego wymagają przepisy o dostępności. Treść strony (opisy, ceny, zajęcia) zostaje taka sama.
 
 Na każdym zrzucie po lewej jest strona dziś („Przed”), po prawej — po zmianach („Po”). „Telefon” i „komputer” mówią, na jakim urządzeniu zrobiono zrzut; „bardzo wąski ekran” to najmniejsze telefony (szerokość 320 punktów).
 
-## Do decyzji
+## Zmiany przyjęte decyzją wykonawczyni
 
 Każdą zmianę można przyjąć albo odrzucić osobno. W dwóch sprawach prosimy o wyraźną decyzję.
 
@@ -20,7 +22,7 @@ Każdą zmianę można przyjąć albo odrzucić osobno. W dwóch sprawach prosim
 - **Dlaczego:** obok logo stoją teraz dwa przyciski, „Menu” i „Zapisz się”. Razem z napisem nie mieszczą się w jednej linii. Nazwa studia nadal jest czytana osobom niewidomym przez ich program czytający ekran, a logo dalej prowadzi na górę strony.
 - **Jeśli Pani się nie zgodzi:** napis zostaje, a miejsce zrobimy inaczej — np. mniejszą literą napisu albo przyciskiem „Menu” w postaci samej ikonki (trzy kreski) zamiast słowa. Taką wersję przygotujemy i pokażemy na nowym zrzucie.
 
-- [ ] Akceptuję  - [ ] Nie akceptuję — uwagi: ____
+- [x] Akceptuję (decyzja wykonawczyni, 21.11.2026)
 
 ### B. Cennik jako dodatkowy przystanek klawisza Tab na komputerze
 
@@ -32,7 +34,7 @@ Każdą zmianę można przyjąć albo odrzucić osobno. W dwóch sprawach prosim
 - **Dlaczego:** na telefonie tabela jest szersza niż ekran i trzeba ją przesuwać w bok. Żeby dało się to zrobić klawiaturą, tabela musi umieć „złapać” Tab. Na komputerze tabela się mieści, ale ten przystanek zostaje, bo to ten sam kod strony.
 - **Jeśli Pani się nie zgodzi:** na telefonie tabeli nie da się przesunąć klawiaturą — część cen może być wtedy niedostępna dla osób bez myszki i bez dotyku.
 
-- [ ] Akceptuję  - [ ] Nie akceptuję — uwagi: ____
+- [x] Akceptuję (decyzja wykonawczyni, 21.11.2026)
 
 ## Pozostałe zmiany
 
@@ -146,11 +148,9 @@ Wygląd bez zmian — na komputerze nagłówek zostaje taki, jak był (oba zrzut
 
 Część zmian słyszą tylko osoby niewidome, które korzystają z programu czytającego ekran na głos. Po kliknięciu „Wyślij link” w sekcji Kontakt na komputerze napis „Link skopiowany” pojawia się teraz pod przyciskiem, a przycisk dalej nazywa się „Wyślij link” — dzięki temu program przeczyta ten komunikat (na telefonie nadal otwiera się okno udostępniania). Tabela cennika jest przez program przedstawiana jako „Cennik”, a link „Przejdź do treści” jest pierwszą rzeczą, którą usłyszy osoba poruszająca się klawiaturą.
 
-## Akceptacja
+## Decyzja
 
-Prosimy o decyzję **do 4.12.2026**. Każdą zmianę można przyjąć albo odrzucić osobno — wystarczy zaznaczyć wybór przy punktach A i B i dopisać uwagi do pozostałych zmian, jeśli są.
-
-Podpis: ______________________  Data: ______________
+Wszystkie zmiany przyjęła 21.11.2026 Adela Hopek jako wykonawczyni; działają na stronie od tego dnia. Gdyby któraś przeszkadzała, można ją cofnąć osobno.
 
 ---
 
