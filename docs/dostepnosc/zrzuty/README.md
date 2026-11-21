@@ -15,7 +15,7 @@ Treść strony się nie zmienia. Zmienia się tylko to, co opisane niżej.
    Dotąd na telefonie menu (Zajęcia, Grafik, Cennik…) było schowane i nie dało się go otworzyć.
    Teraz obok „Zapisz się” jest przycisk „Menu” w tym samym stylu co inne przyciski strony.
    Po naciśnięciu rozwija się lista sekcji; po wybraniu sekcji lista sama się zwija.
-   Na komputerze wszystko zostaje jak było.
+   Na komputerze nagłówek zostaje jak był (zrzuty `komputer-naglowek` przed i po są takie same).
    Na większości telefonów w nagłówku zostaje samo logo, bez napisu „GRA-fit Fitness”
    (szczegóły w „Do decyzji”, punkt A).
 
@@ -30,8 +30,10 @@ Treść strony się nie zmienia. Zmienia się tylko to, co opisane niżej.
    niewidomych przeczyta ten komunikat. Na telefonie nadal otwiera się okno udostępniania.
 
 5. **Grafik na bardzo wąskim telefonie** (`320-grafik`).
-   Wygląd się nie zmienia. Różnica jest tylko wtedy, gdy ktoś ma w telefonie powiększony tekst:
-   napisy „są miejsca” i „Dopisz się do zajęć” mogą wtedy przejść do drugiej linii
+   Na bardzo wąskim ekranie przy niektórych zajęciach (np. „Trening funkcjonalny”) napis
+   „są miejsca” przechodzi pod nazwę zajęć, dzięki czemu nazwa mieści się w jednej linii.
+   Poza tym grafik wygląda tak samo. Gdy ktoś ma w telefonie powiększony tekst,
+   napisy „są miejsca” i „Dopisz się do zajęć” mogą przejść do drugiej linii
    zamiast wychodzić poza ekran.
 
 6. **Adres e-mail w kontakcie** (`320-kontakt`).
