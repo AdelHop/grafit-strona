@@ -92,8 +92,6 @@ test('NVDA: cennik → najbliższe zajęcia → dopisz się', async ({ page, nvd
   expect(mowa).toContain(`Dopisz się do zajęć: ${nazwa}`);
   expect(mowa).toContain(godzina);
 
-  // S3 b: ogłoszenie wczytania przy otwarciu strony to dobra praktyka poza AA — tylko zapis informacyjny
-  // (21.11: NVDA w Edge go nie ogłasza, także ręcznie; audyt, sekcja „NVDA”).
-  const ogloszono = ogloszenie.some((f) => f.includes('Wczytano grafik'));
-  console.log(`S3 b — NVDA ogłosił wczytanie grafiku: ${ogloszono ? 'tak' : 'nie'}`);
+  // S3 b: ogłoszenie wczytania grafiku (dobra praktyka poza AA). 22.11: ogłaszane, gdy czekanie jest w nvda.capture.
+  expect(ogloszenie.some((f) => f.includes('Wczytano grafik'))).toBe(true);
 });
