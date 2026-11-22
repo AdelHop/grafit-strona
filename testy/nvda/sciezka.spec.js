@@ -55,10 +55,17 @@ test('NVDA: cennik → najbliższe zajęcia → dopisz się', async ({ page, nvd
   await nvda.navigateToWebContent();
 
   // 1. Ogłoszenie wczytania grafiku (S3): NVDA stoi na początku strony, grafik przychodzi później.
+  // Guidepup zapisuje mowę tylko w czasie komendy, więc czekanie na grafik idzie w nvda.capture z pełnym
+  // zapisem (bez tego log był zawsze pusty — por. aplikacja, e2e/nvda/kontrola.spec.js, 22.11.2026).
   await nvda.clearSpokenPhraseLog();
-  wypusc();
-  await expect(page.locator('#lista-grafiku .grafik__dzien').first()).toBeVisible();
-  await page.waitForTimeout(4000);
+  await nvda.capture(
+    async () => {
+      wypusc();
+      await expect(page.locator('#lista-grafiku .grafik__dzien').first()).toBeVisible();
+      await page.waitForTimeout(4000);
+    },
+    { capture: true },
+  );
   const ogloszenie = [...(await nvda.spokenPhraseLog())];
 
   // 2. Ścieżka nagłówkami. Mowa zapisywana zawsze — także gdy krok się nie uda.
