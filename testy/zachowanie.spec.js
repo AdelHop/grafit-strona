@@ -337,15 +337,18 @@ test.describe('wczytanie grafiku i sklepu ogłaszane', () => {
   }
 });
 
-// Deklaracja dostępności (dostepnosc.html): klawiatura, fokus, „Przejdź do treści”, 320 px;
-// link w stopce strony głównej prowadzi pod adres, na który wskazuje aplikacja.
-test.describe('deklaracja dostępności', () => {
+// Strony statyczne (deklaracja dostępności, polityka prywatności): klawiatura, fokus, „Przejdź do treści”,
+// 320 px, nagłówki; link w stopce strony głównej prowadzi pod adres, na który wskazuje aplikacja.
+for (const { adres, h1, nazwa } of [
+  { adres: '/dostepnosc.html', h1: 'Deklaracja dostępności', nazwa: 'deklaracja' },
+  { adres: '/polityka-prywatnosci.html', h1: 'Polityka prywatności', nazwa: 'polityka' },
+]) test.describe(h1, () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/dostepnosc.html');
-    await expect(page.locator('h1')).toHaveText('Deklaracja dostępności');
+    await page.goto(adres);
+    await expect(page.locator('h1')).toHaveText(h1);
   });
 
-  test('deklaracja: klawiatura dochodzi do wszystkiego, fokus widoczny', async ({ page }) => {
+  test(`${nazwa}: klawiatura dochodzi do wszystkiego, fokus widoczny`, async ({ page }) => {
     const oczekiwane = await oznaczInteraktywne(page);
     const odwiedzone = [];
     const bezObrysu = [];
@@ -367,7 +370,7 @@ test.describe('deklaracja dostępności', () => {
     expect(bezObrysu, 'elementy bez obrysu fokusu').toEqual([]);
   });
 
-  test('deklaracja: przejdź do treści', async ({ page }) => {
+  test(`${nazwa}: przejdź do treści`, async ({ page }) => {
     await page.keyboard.press('Tab');
     await expect(page.locator(':focus'), 'pierwszy Tab').toHaveAccessibleName(/Przejdź do treści/);
     await page.keyboard.press('Enter');
@@ -375,7 +378,7 @@ test.describe('deklaracja dostępności', () => {
     expect(await page.evaluate(() => !!document.activeElement.closest('main')), 'fokus w main po Enter').toBe(true);
   });
 
-  test('deklaracja: 320 px bez przewijania w bok', async ({ page }) => {
+  test(`${nazwa}: 320 px bez przewijania w bok`, async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 640 });
     for (const odstepy of [false, true]) {
       if (odstepy) await page.addStyleTag({ content: ODSTEPY_WCAG });
@@ -385,7 +388,7 @@ test.describe('deklaracja dostępności', () => {
     }
   });
 
-  test('deklaracja: nagłówki po kolei', async ({ page }) => {
+  test(`${nazwa}: nagłówki po kolei`, async ({ page }) => {
     const poziomy = await page.locator('h1, h2, h3, h4, h5, h6').evaluateAll((hs) => hs.map((h) => Number(h.tagName[1])));
     expect(poziomy[0], 'pierwszy nagłówek to h1').toBe(1);
     expect(poziomy.filter((p) => p === 1), 'jeden h1').toHaveLength(1);
@@ -404,4 +407,14 @@ test('stopka strony głównej: link do deklaracji dostępności', async ({ page 
   expect(new URL(await link.getAttribute('href'), 'https://grafit-fitness.pl/').href).toBe('https://grafit-fitness.pl/dostepnosc.html');
   await link.click();
   await expect(page.locator('h1')).toHaveText('Deklaracja dostępności');
+});
+
+test('stopka strony głównej: link do polityki prywatności', async ({ page }) => {
+  await podstawApi(page, 'puste');
+  await page.goto('/');
+  const link = page.locator('footer.stopka').getByRole('link', { name: 'Polityka prywatności' });
+  await expect(link).toHaveCount(1);
+  expect(new URL(await link.getAttribute('href'), 'https://grafit-fitness.pl/').href).toBe('https://grafit-fitness.pl/polityka-prywatnosci.html');
+  await link.click();
+  await expect(page.locator('h1')).toHaveText('Polityka prywatności');
 });
