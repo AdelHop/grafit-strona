@@ -40,9 +40,10 @@ main:focus { outline: none; }
 
 /* Nagłówek */
 .naglowek { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); border-bottom: 1px solid var(--linia); }
-.naglowek__wnetrze { display: flex; align-items: center; gap: 20px; height: 64px; }
+.naglowek__wnetrze { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; min-height: 64px; }
 .marka { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 1.05rem; white-space: nowrap; }
-.menu { display: flex; gap: 22px; margin-left: auto; }
+/* Menu i nagłówek zawijają się, gdy się nie mieszczą (np. powiększone odstępy tekstu, WCAG 1.4.12) — bez przewijania w bok. */
+.menu { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 22px; margin-left: auto; }
 .menu a { text-decoration: none; font-weight: 600; color: var(--szary-tekst); }
 .menu a:hover { color: var(--czarny); }
 .naglowek .menu-przycisk { display: none; font: inherit; font-size: .95rem; font-weight: 700; cursor: pointer; }
@@ -149,9 +150,8 @@ main:focus { outline: none; }
 }
 
 /* Cennik */
-.tabela-owijka { overflow-x: auto; }
-.cennik { width: 100%; border-collapse: collapse; min-width: 520px; }
-.cennik th, .cennik td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--linia); vertical-align: top; }
+.cennik { width: 100%; border-collapse: collapse; }
+.cennik th, .cennik td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--linia); vertical-align: top; overflow-wrap: anywhere; }
 .cennik thead th { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--szary-tekst); }
 .cennik td:nth-child(2) { font-weight: 800; white-space: nowrap; }
 .drobne { font-size: .92rem; color: var(--szary-tekst); }
@@ -194,19 +194,28 @@ address { font-style: normal; font-size: 1.1rem; margin-bottom: 12px; }
 .produkt__opcje { color: var(--szary-tekst); font-size: .9rem; margin: 0; }
 .produkt__grupa { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--szary-tekst); }
 
-/* Deklaracja dostępności: tabele kryteriów WCAG (owijka przewijana klawiaturą jak cennik). */
-.kryteria { width: 100%; border-collapse: collapse; min-width: 720px; background: var(--tlo); margin-bottom: 32px; }
-.kryteria th, .kryteria td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--linia); vertical-align: top; font-size: .95rem; }
-.kryteria thead th { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--szary-tekst); }
-.kryteria tbody th { font-weight: 700; }
-.kryteria td:nth-child(2) { white-space: nowrap; }
+/* Tabele deklaracji i polityki: tekst zawija się w komórkach, bez przewijanej ramki. */
+.tabela-wiersze { width: 100%; border-collapse: collapse; background: var(--tlo); margin-bottom: 32px; table-layout: auto; }
+.tabela-wiersze th, .tabela-wiersze td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--linia); vertical-align: top; font-size: .95rem; overflow-wrap: anywhere; }
+.tabela-wiersze thead th { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--szary-tekst); }
+.tabela-wiersze tbody th { font-weight: 700; }
+/* Wąski ekran: każdy wiersz jako karta z etykietami kolumn (data-etykieta) — bez przewijania w bok.
+   Role ARIA w HTML zachowują budowę tabeli dla czytnika, mimo display: block. Etykieta z ::before
+   ma pusty tekst alternatywny (po „/”), bo czytnik i tak czyta nagłówek kolumny. */
+@media (max-width: 760px) {
+  .tabela-karty thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .tabela-karty, .tabela-karty caption, .tabela-karty tbody, .tabela-karty tr, .tabela-karty th, .tabela-karty td { display: block; width: auto; }
+  .tabela-karty tr { border-bottom: 1px solid var(--linia); padding: 8px 0; }
+  .tabela-karty th, .tabela-karty td { border: 0; padding: 4px 12px; }
+  .tabela-karty td[data-etykieta]::before { content: attr(data-etykieta) ': '; content: attr(data-etykieta) ': ' / ''; font-weight: 700; }
+}
 
 /* Polityka prywatności: opis każdego przetwarzania jako lista Cel / Podstawa / Zakres / Okres; luki do uzupełnienia oznaczone <mark>. */
 .polityka__dane { display: grid; grid-template-columns: minmax(8em, max-content) 1fr; gap: 6px 16px; margin: 0 0 28px; }
 .polityka__dane dt { font-weight: 700; }
 .polityka__dane dd { margin: 0; }
 @media (max-width: 560px) { .polityka__dane { grid-template-columns: 1fr; } .polityka__dane dd { margin-bottom: 8px; } }
-.kryteria caption { text-align: left; font-weight: 700; padding: 0 0 8px; }
+.tabela-wiersze caption { text-align: left; font-weight: 700; padding: 0 0 8px; }
 mark { background: var(--zolty); color: var(--czarny); padding: 0 .2em; }
 /* Długie adresy (e-mail, dataprivacyframework.gov) zawijają się przy 320 px z odstępami WCAG. */
 .polityka a { overflow-wrap: anywhere; }

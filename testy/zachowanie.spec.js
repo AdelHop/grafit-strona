@@ -388,6 +388,21 @@ for (const { adres, h1, nazwa } of [
     }
   });
 
+  // Tekst ma się zawijać — także w tabelach: żadnej ramki przewijanej w bok, na telefonie i komputerze.
+  // (Przewijana tabela spełnia wyjątek 1.4.10, ale tu niczego nie wymaga — na wąskim ekranie wiersze są kartami.)
+  test(`${nazwa}: tekst i tabele się zawijają, nic nie przewija się w bok`, async ({ page }) => {
+    for (const szerokosc of [320, 412, 1280]) {
+      await page.setViewportSize({ width: szerokosc, height: 800 });
+      for (const odstepy of [false, true]) {
+        if (odstepy) await page.addStyleTag({ content: ODSTEPY_WCAG });
+        const etykieta = ` (${szerokosc} px${odstepy ? ', odstępy WCAG' : ''})`;
+        expect.soft(await przewijaPoziomo(page), 'strona przewija się w bok' + etykieta).toBe(false);
+        expect.soft(await przewijaneObszary(page), 'obszary przewijane w bok' + etykieta).toEqual([]);
+      }
+      await page.reload();
+    }
+  });
+
   test(`${nazwa}: nagłówki po kolei`, async ({ page }) => {
     const poziomy = await page.locator('h1, h2, h3, h4, h5, h6').evaluateAll((hs) => hs.map((h) => Number(h.tagName[1])));
     expect(poziomy[0], 'pierwszy nagłówek to h1').toBe(1);
