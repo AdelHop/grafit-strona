@@ -208,4 +208,5 @@ address { font-style: normal; font-size: 1.1rem; margin-bottom: 12px; }
 @media (max-width: 560px) { .polityka__dane { grid-template-columns: 1fr; } .polityka__dane dd { margin-bottom: 8px; } }
 .kryteria caption { text-align: left; font-weight: 700; padding: 0 0 8px; }
 mark { background: var(--zolty); color: var(--czarny); padding: 0 .2em; }
-.polityka a[href^="mailto:"] { overflow-wrap: anywhere; }
+/* Długie adresy (e-mail, dataprivacyframework.gov) zawijają się przy 320 px z odstępami WCAG. */
+.polityka a { overflow-wrap: anywhere; }
