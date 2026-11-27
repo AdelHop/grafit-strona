@@ -200,3 +200,12 @@ address { font-style: normal; font-size: 1.1rem; margin-bottom: 12px; }
 .kryteria thead th { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--szary-tekst); }
 .kryteria tbody th { font-weight: 700; }
 .kryteria td:nth-child(2) { white-space: nowrap; }
+
+/* Polityka prywatności: opis każdego przetwarzania jako lista Cel / Podstawa / Zakres / Okres; luki do uzupełnienia oznaczone <mark>. */
+.polityka__dane { display: grid; grid-template-columns: minmax(8em, max-content) 1fr; gap: 6px 16px; margin: 0 0 28px; }
+.polityka__dane dt { font-weight: 700; }
+.polityka__dane dd { margin: 0; }
+@media (max-width: 560px) { .polityka__dane { grid-template-columns: 1fr; } .polityka__dane dd { margin-bottom: 8px; } }
+.kryteria caption { text-align: left; font-weight: 700; padding: 0 0 8px; }
+mark { background: var(--zolty); color: var(--czarny); padding: 0 .2em; }
+.polityka a[href^="mailto:"] { overflow-wrap: anywhere; }

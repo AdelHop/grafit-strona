@@ -34,10 +34,13 @@ for (const wariant of ['pelne', 'puste', 'blad']) {
   });
 }
 
-// Deklaracja dostępności: strona statyczna, bez API — te same tagi co strona główna.
-test('axe: deklaracja dostępności', async ({ page }) => {
-  await page.goto('/dostepnosc.html');
-  await expect(page.locator('h1')).toHaveText('Deklaracja dostępności');
+// Strony statyczne bez API (deklaracja, polityka prywatności) — te same tagi co strona główna.
+for (const [adres, h1] of [
+  ['/dostepnosc.html', 'Deklaracja dostępności'],
+  ['/polityka-prywatnosci.html', 'Polityka prywatności'],
+]) test(`axe: ${h1.toLowerCase()}`, async ({ page }) => {
+  await page.goto(adres);
+  await expect(page.locator('h1')).toHaveText(h1);
   const wynik = await new AxeBuilder({ page }).withTags(TAGI).analyze();
   const opis = wynik.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`);
   await test.info().attach('naruszenia', { body: JSON.stringify(opis, null, 2), contentType: 'application/json' });
