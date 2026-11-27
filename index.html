@@ -227,22 +227,23 @@
 <section class="sekcja" id="cennik">
   <div class="kontener">
     <h2 id="cennik-tytul">Cennik</h2>
-    <div class="tabela-owijka" tabindex="0" role="region" aria-labelledby="cennik-tytul">
-    <table class="cennik">
-      <thead><tr><th scope="col">Co</th><th scope="col">Cena</th><th scope="col">Na co</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Wejście jednorazowe</th><td>50 zł</td><td>Zajęcia fitness</td></tr>
-        <tr><th scope="row">Wejście jednorazowe – boks</th><td>75 zł</td><td>Boks</td></tr>
-        <tr><th scope="row">Karnet 5 wejść</th><td>185 zł</td><td>Fitness (bez boksu i warsztatów). Można przedłużyć o 7 dni za 50 zł.</td></tr>
-        <tr><th scope="row">Open Light</th><td>260 zł</td><td>Fitness bez limitu wejść (bez boksu i warsztatów)</td></tr>
-        <tr><th scope="row">Open</th><td>470 zł</td><td>Fitness i boks bez limitu wejść (bez warsztatów)</td></tr>
-        <tr><th scope="row">Boks 4</th><td>240 zł</td><td>4 wejścia na boks</td></tr>
-        <tr><th scope="row">Boks 8</th><td>450 zł</td><td>8 wejść na boks</td></tr>
-        <tr><th scope="row">Intro Trening Funkcjonalny</th><td>129 zł</td><td>Warsztat wprowadzający, poza karnetem</td></tr>
-        <tr><th scope="row">Postawa to Podstawa</th><td>229 zł</td><td>Warsztat, poza karnetem</td></tr>
+    <div class="tabela-blok">
+    <!-- [html-validate-disable-block no-redundant-role: role ARIA zachowują budowę tabeli dla czytnika, gdy na telefonie wiersze są kartami (display: block)] -->
+    <table class="cennik tabela-karty" role="table" aria-labelledby="cennik-tytul">
+      <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Co</th><th scope="col" role="columnheader">Cena</th><th scope="col" role="columnheader">Na co</th></tr></thead>
+      <tbody role="rowgroup">
+        <tr role="row"><th scope="row" role="rowheader">Wejście jednorazowe</th><td role="cell" data-etykieta="Cena">50 zł</td><td role="cell" data-etykieta="Na co">Zajęcia fitness</td></tr>
+        <tr role="row"><th scope="row" role="rowheader">Wejście jednorazowe – boks</th><td role="cell" data-etykieta="Cena">75 zł</td><td role="cell" data-etykieta="Na co">Boks</td></tr>
+        <tr role="row"><th scope="row" role="rowheader">Karnet 5 wejść</th><td role="cell" data-etykieta="Cena">185 zł</td><td role="cell" data-etykieta="Na co">Fitness (bez boksu i warsztatów). Można przedłużyć o 7 dni za 50 zł.</td></tr>
+        <tr role="row"><th scope="row" role="rowheader">Open Light</th><td role="cell" data-etykieta="Cena">260 zł</td><td role="cell" data-etykieta="Na co">Fitness bez limitu wejść (bez boksu i warsztatów)</td></tr>
+        <tr role="row"><th scope="row" role="rowheader">Open</th><td role="cell" data-etykieta="Cena">470 zł</td><td role="cell" data-etykieta="Na co">Fitness i boks bez limitu wejść (bez warsztatów)</td></tr>
+        <tr role="row"><th scope="row" role="rowheader">Boks 4</th><td role="cell" data-etykieta="Cena">240 zł</td><td role="cell" data-etykieta="Na co">4 wejścia na boks</td></tr>
+        <tr role="row"><th scope="row" role="rowheader">Boks 8</th><td role="cell" data-etykieta="Cena">450 zł</td><td role="cell" data-etykieta="Na co">8 wejść na boks</td></tr>
+        <tr role="row"><th scope="row" role="rowheader">Intro Trening Funkcjonalny</th><td role="cell" data-etykieta="Cena">129 zł</td><td role="cell" data-etykieta="Na co">Warsztat wprowadzający, poza karnetem</td></tr>
+        <tr role="row"><th scope="row" role="rowheader">Postawa to Podstawa</th><td role="cell" data-etykieta="Cena">229 zł</td><td role="cell" data-etykieta="Na co">Warsztat, poza karnetem</td></tr>
       </tbody>
     </table>
-    </div>
+  </div>
     <p class="drobne">Karnety są ważne 29 dni od zakupu. Przy pierwszym karnecie oraz przy zakupie później niż 7 dni po wygaśnięciu poprzedniego doliczamy opłatę aktywacyjną 11 zł. Płacisz gotówką, BLIK-iem lub przelewem. Vouchery na prezent kupisz w aplikacji albo w studiu.</p>
   </div>
 </section>
