@@ -193,3 +193,10 @@ address { font-style: normal; font-size: 1.1rem; margin-bottom: 12px; }
 .produkt__cena { font-weight: 800; font-size: 1.1rem; }
 .produkt__opcje { color: var(--szary-tekst); font-size: .9rem; margin: 0; }
 .produkt__grupa { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--szary-tekst); }
+
+/* Deklaracja dostępności: tabele kryteriów WCAG (owijka przewijana klawiaturą jak cennik). */
+.kryteria { width: 100%; border-collapse: collapse; min-width: 720px; background: var(--tlo); margin-bottom: 32px; }
+.kryteria th, .kryteria td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--linia); vertical-align: top; font-size: .95rem; }
+.kryteria thead th { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--szary-tekst); }
+.kryteria tbody th { font-weight: 700; }
+.kryteria td:nth-child(2) { white-space: nowrap; }
